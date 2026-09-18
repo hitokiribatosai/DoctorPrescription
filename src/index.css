@@ -1,0 +1,192 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-arabic: 'Cairo', 'Amiri', 'Traditional Arabic', sans-serif;
+  --font-amiri: 'Amiri', serif;
+  --font-display: 'Outfit', 'Inter', sans-serif;
+
+  --color-primary: #0d9488;
+  --color-primary-dark: #0f766e;
+  --color-primary-light: #ccfbf1;
+  
+  --color-secondary: #0284c7;
+  --color-navy: #0f172a;
+  --color-surface: #ffffff;
+  --color-bg: #f8fafc;
+  --color-border: #e2e8f0;
+  
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: #1e293b;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-arabic {
+  font-family: var(--font-arabic);
+}
+
+.font-amiri {
+  font-family: var(--font-amiri);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Scrollbars modernes */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Boutons & interactions */
+button {
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* Animations légères */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-out forwards;
+}
+
+/* Feuille d'ordonnance A4 & A5 écran */
+.prescription-sheet {
+  background: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s ease;
+  margin: 0 auto;
+}
+
+.prescription-sheet.a4 {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 18mm 20mm 15mm 20mm;
+}
+
+.prescription-sheet.a5 {
+  width: 148mm;
+  min-height: 210mm;
+  padding: 12mm 14mm 10mm 14mm;
+}
+
+/* STYLES SPÉCIFIQUES D'IMPRESSION (@media print) */
+@media print {
+  /* Cacher tous les éléments de navigation, boutons, volets */
+  body {
+    background: white !important;
+    color: black !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .no-print,
+  nav,
+  header,
+  .app-sidebar,
+  .editor-controls,
+  .toast-container,
+  button {
+    display: none !important;
+  }
+
+  .print-only-container {
+    display: block !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .prescription-sheet {
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .prescription-sheet.a4 {
+    width: 100% !important;
+    min-height: 100vh !important;
+    padding: 12mm 16mm !important;
+  }
+
+  .prescription-sheet.a5 {
+    width: 100% !important;
+    min-height: 100vh !important;
+    padding: 8mm 10mm !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 8mm;
+  }
+}
+
+/* Tampon / Cachet Médical Algérie */
+.medical-stamp-box {
+  border: 2.5px solid #1e3a8a;
+  color: #1e3a8a;
+  border-radius: 6px;
+  padding: 8px 12px;
+  display: inline-block;
+  text-align: center;
+  transform: rotate(-1.5deg);
+  background: rgba(30, 58, 138, 0.02);
+  user-select: none;
+}
+
+.medical-stamp-box.oval {
+  border-radius: 50%;
+  padding: 12px 24px;
+}
+
+.medical-stamp-box.black-ink {
+  border-color: #0f172a;
+  color: #0f172a;
+}
+
+.medical-stamp-box.purple-ink {
+  border-color: #6b21a8;
+  color: #6b21a8;
+}
