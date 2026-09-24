@@ -790,7 +790,7 @@ export const PrescriptionEditor: React.FC<PrescriptionEditorProps> = ({
                       Aucun médicament. Commencez à taper ci-dessous ou sélectionnez un favori.
                     </div>
                   )}
-                    items.map((item, index) => (
+                  {items.map((item, index) => (
                       <div
                         key={item.id}
                         className="p-3 rounded-xl border border-slate-200 bg-white shadow-2xs space-y-2 text-xs"
