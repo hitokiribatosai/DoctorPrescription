@@ -201,30 +201,30 @@ export const LibraryManager: React.FC<LibraryManagerProps> = ({
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div className="workspace-page max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       {/* En-tête Bibliothèque */}
-      <div className="no-print mb-6 flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+      <div className="workspace-heading no-print mb-6 flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
         <div>
           <div className="flex items-center space-x-2">
             <BookOpen className="w-5 h-5 text-emerald-600" />
             <h1 className="text-xl font-extrabold text-slate-900 tracking-tight">
-              Thésaurus Médicamenteux & Dispositifs du Praticien
+              Bibliothèque de médicaments
             </h1>
           </div>
           <p className="text-xs text-slate-500 mt-0.5">
             {catalogLoaded
-              ? `${medicines.length.toLocaleString('fr-DZ')} spécialités, classées par catégorie thérapeutique, avec leurs formes, dosages et laboratoires.`
+              ? `${medicines.length.toLocaleString('fr-DZ')} références · recherchez par nom, substance active, dosage ou laboratoire.`
               : 'Chargement du catalogue algérien des médicaments…'}
           </p>
         </div>
 
-        <div className="flex items-center space-x-2">
+        <div className="library-actions flex items-center space-x-2">
           <button
             onClick={() => openAddModal(false)}
             className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 transition-colors shadow-xs"
           >
             <Plus className="w-4 h-4" />
-            <span>Nouveau Médicament</span>
+            <span>Ajouter un médicament</span>
           </button>
 
           <button
@@ -232,7 +232,7 @@ export const LibraryManager: React.FC<LibraryManagerProps> = ({
             className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-purple-700 bg-purple-50 hover:bg-purple-100 border border-purple-200 transition-colors"
           >
             <Activity className="w-4 h-4" />
-            <span>Outil Diagnostic / DM</span>
+            <span>Ajouter un dispositif</span>
           </button>
 
           <button
@@ -254,12 +254,12 @@ export const LibraryManager: React.FC<LibraryManagerProps> = ({
       </div>
 
       {/* Barre de Recherche & Filtres */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs mb-6 flex flex-wrap items-center justify-between gap-3">
+      <div className="library-filter-bar bg-white p-4 rounded-2xl border border-slate-200 shadow-xs mb-6 flex flex-wrap items-center justify-between gap-3">
         <div className="relative flex-1 min-w-[260px]">
           <Search className="w-4 h-4 absolute left-3 top-3 text-slate-400" />
           <input
             type="text"
-            placeholder="Rechercher par nom, DCI, laboratoire (Saidal, Biopharm, Merinal)..."
+            placeholder="Rechercher un nom, une substance ou un laboratoire…"
             value={searchQuery}
             onChange={e => {
               setSearchQuery(e.target.value);
@@ -269,7 +269,7 @@ export const LibraryManager: React.FC<LibraryManagerProps> = ({
           />
         </div>
 
-        <div className="flex items-center space-x-2">
+        <div className="library-filter-controls flex items-center space-x-2">
           {/* Bouton Filtre Favoris */}
           <button
             onClick={() => {
@@ -283,7 +283,7 @@ export const LibraryManager: React.FC<LibraryManagerProps> = ({
             }`}
           >
             <Star className={`w-3.5 h-3.5 ${showOnlyFavorites ? 'fill-amber-500 text-amber-500' : 'text-slate-400'}`} />
-            <span>Favoris Seuls ({medicines.filter(m => m.isFavorite).length})</span>
+            <span>Favoris uniquement ({medicines.filter(m => m.isFavorite).length})</span>
           </button>
 
           {/* Filtre Catégorie */}
@@ -304,7 +304,7 @@ export const LibraryManager: React.FC<LibraryManagerProps> = ({
       </div>
 
       {/* Grille des Médicaments */}
-      <div className="flex items-center justify-between mb-3 text-xs text-slate-500">
+      <div className="library-result-summary flex items-center justify-between mb-3 text-xs text-slate-500">
         <span>
           {filteredMedicines.length === 0
             ? 'Aucun médicament trouvé'
@@ -312,7 +312,7 @@ export const LibraryManager: React.FC<LibraryManagerProps> = ({
         </span>
         <span>{categories.length} catégories thérapeutiques</span>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="medicine-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {visibleMedicines.map(med => (
           <div
             key={med.id}

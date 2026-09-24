@@ -108,9 +108,9 @@ export const MedicalCertificatesView: React.FC<MedicalCertificatesViewProps> = (
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div className="workspace-page max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       {/* Barre supérieure */}
-      <div className="no-print mb-6 flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+      <div className="workspace-heading no-print mb-6 flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
         <div>
           <div className="flex items-center space-x-2">
             <Award className="w-5 h-5 text-indigo-600" />

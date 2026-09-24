@@ -49,7 +49,7 @@ export const SettingsManager: React.FC<SettingsManagerProps> = ({
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div className="workspace-page max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       {savedSuccess && (
         <div className="fixed top-20 right-6 z-50 flex items-center space-x-2 px-4 py-3 rounded-xl bg-emerald-800 text-white font-bold text-sm shadow-xl border border-emerald-600 animate-fade-in">
           <CheckCircle className="w-5 h-5 text-emerald-300" />
@@ -58,7 +58,7 @@ export const SettingsManager: React.FC<SettingsManagerProps> = ({
       )}
 
       {/* Header */}
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+      <div className="workspace-heading mb-6 flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
         <div>
           <div className="flex items-center space-x-2">
             <Settings className="w-5 h-5 text-slate-700" />

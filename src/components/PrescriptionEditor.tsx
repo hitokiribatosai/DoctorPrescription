@@ -341,7 +341,7 @@ export const PrescriptionEditor: React.FC<PrescriptionEditorProps> = ({
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4">
+    <div className="workspace-page max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4">
       {/* Toast Notification */}
       {notification && (
         <div
@@ -361,9 +361,9 @@ export const PrescriptionEditor: React.FC<PrescriptionEditorProps> = ({
       )}
 
       {/* 1. BARRE DE COMMANDE SUPÉRIEURE UNIFIÉE & SWIPER D'AFFICHAGE */}
-      <div className="no-print mb-4 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-3">
+      <div className="workspace-heading no-print mb-4 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-3">
         {/* Titre & Statut */}
-        <div className="flex items-center space-x-2">
+        <div className="prescription-heading-title flex items-center space-x-2">
           <button
             onClick={handlePrevView}
             className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-600"
@@ -396,7 +396,7 @@ export const PrescriptionEditor: React.FC<PrescriptionEditorProps> = ({
         </div>
 
         {/* SWIPER / SEGMENTED TABS TOGGLE */}
-        <div className="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-bold">
+        <div className="prescription-view-tabs flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-bold">
           <button
             type="button"
             onClick={() => setViewMode('editor')}
@@ -465,7 +465,7 @@ export const PrescriptionEditor: React.FC<PrescriptionEditorProps> = ({
         </div>
 
         {/* Boutons d'Action Principaux */}
-        <div className="flex items-center space-x-2">
+        <div className="prescription-actions flex items-center space-x-2">
           <button
             onClick={handleSaveToHistory}
             className="flex items-center space-x-1.5 px-3 py-2 rounded-xl text-xs font-bold text-teal-800 bg-teal-50 hover:bg-teal-100 border border-teal-200 transition-colors"

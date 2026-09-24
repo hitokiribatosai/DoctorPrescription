@@ -81,7 +81,7 @@ export function App() {
   const favoriteCount = medicines.filter(m => m.isFavorite).length;
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-sans selection:bg-teal-600 selection:text-white">
+    <div className="app-shell">
       {/* Navigation Principale */}
       <Navbar
         activeTab={activeTab}
@@ -95,7 +95,7 @@ export function App() {
       />
 
       {/* Contenu de la Vue Active */}
-      <main className="flex-1">
+      <main className="app-main">
         {activeTab === 'prescription' && (
           <PrescriptionEditor
             medicines={medicines}
