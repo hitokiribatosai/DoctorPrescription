@@ -17,14 +17,19 @@ import { ARABIC_INSTRUCTION_PRESETS } from '../data/defaultData';
 interface LibraryManagerProps {
   medicines: Medicine[];
   onRefreshMedicines: () => void;
+  catalogLoaded: boolean;
 }
+
+const MEDICINES_PER_PAGE = 60;
 
 export const LibraryManager: React.FC<LibraryManagerProps> = ({
   medicines,
   onRefreshMedicines,
+  catalogLoaded,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [currentPage, setCurrentPage] = useState(0);
   const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [editingMedicine, setEditingMedicine] = useState<Medicine | null>(null);
@@ -59,12 +64,23 @@ export const LibraryManager: React.FC<LibraryManagerProps> = ({
       const matchSearch =
         m.tradeName.toLowerCase().includes(q) ||
         m.dci.toLowerCase().includes(q) ||
-        m.laboratory.toLowerCase().includes(q);
+        m.laboratory.toLowerCase().includes(q) ||
+        m.form.toLowerCase().includes(q) ||
+        m.dosage.toLowerCase().includes(q) ||
+        m.category.toLowerCase().includes(q) ||
+        (m.packageDetails || '').toLowerCase().includes(q);
       const matchCat = selectedCategory === 'all' || m.category === selectedCategory;
       const matchFav = !showOnlyFavorites || m.isFavorite;
       return matchSearch && matchCat && matchFav;
-    });
+    }).sort((a, b) => a.tradeName.localeCompare(b.tradeName, 'fr'));
   }, [medicines, searchQuery, selectedCategory, showOnlyFavorites]);
+
+  const pageCount = Math.max(1, Math.ceil(filteredMedicines.length / MEDICINES_PER_PAGE));
+  const safePage = Math.min(currentPage, pageCount - 1);
+  const visibleMedicines = filteredMedicines.slice(
+    safePage * MEDICINES_PER_PAGE,
+    (safePage + 1) * MEDICINES_PER_PAGE
+  );
 
   const handleToggleFavorite = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -196,7 +212,9 @@ export const LibraryManager: React.FC<LibraryManagerProps> = ({
             </h1>
           </div>
           <p className="text-xs text-slate-500 mt-0.5">
-            Gérez vos médicaments habituels, conditionnements exacts en boîtes, laboratoires algériens et favoris (⭐).
+            {catalogLoaded
+              ? `${medicines.length.toLocaleString('fr-DZ')} spécialités, classées par catégorie thérapeutique, avec leurs formes, dosages et laboratoires.`
+              : 'Chargement du catalogue algérien des médicaments…'}
           </p>
         </div>
 
@@ -243,7 +261,10 @@ export const LibraryManager: React.FC<LibraryManagerProps> = ({
             type="text"
             placeholder="Rechercher par nom, DCI, laboratoire (Saidal, Biopharm, Merinal)..."
             value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
+            onChange={e => {
+              setSearchQuery(e.target.value);
+              setCurrentPage(0);
+            }}
             className="w-full pl-9 pr-3 py-2 text-xs border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none"
           />
         </div>
@@ -251,7 +272,10 @@ export const LibraryManager: React.FC<LibraryManagerProps> = ({
         <div className="flex items-center space-x-2">
           {/* Bouton Filtre Favoris */}
           <button
-            onClick={() => setShowOnlyFavorites(!showOnlyFavorites)}
+            onClick={() => {
+              setShowOnlyFavorites(!showOnlyFavorites);
+              setCurrentPage(0);
+            }}
             className={`flex items-center space-x-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-colors border ${
               showOnlyFavorites
                 ? 'bg-amber-100 text-amber-900 border-amber-300'
@@ -265,7 +289,10 @@ export const LibraryManager: React.FC<LibraryManagerProps> = ({
           {/* Filtre Catégorie */}
           <select
             value={selectedCategory}
-            onChange={e => setSelectedCategory(e.target.value)}
+            onChange={e => {
+              setSelectedCategory(e.target.value);
+              setCurrentPage(0);
+            }}
             className="text-xs border border-slate-200 rounded-xl px-3 py-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none"
           >
             <option value="all">Toutes les catégories</option>
@@ -277,8 +304,16 @@ export const LibraryManager: React.FC<LibraryManagerProps> = ({
       </div>
 
       {/* Grille des Médicaments */}
+      <div className="flex items-center justify-between mb-3 text-xs text-slate-500">
+        <span>
+          {filteredMedicines.length === 0
+            ? 'Aucun médicament trouvé'
+            : `Affichage ${safePage * MEDICINES_PER_PAGE + 1}–${Math.min((safePage + 1) * MEDICINES_PER_PAGE, filteredMedicines.length)} sur ${filteredMedicines.length.toLocaleString('fr-DZ')}`}
+        </span>
+        <span>{categories.length} catégories thérapeutiques</span>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {filteredMedicines.map(med => (
+        {visibleMedicines.map(med => (
           <div
             key={med.id}
             className="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs hover:border-emerald-300 transition-all flex flex-col justify-between space-y-3"
@@ -326,6 +361,11 @@ export const LibraryManager: React.FC<LibraryManagerProps> = ({
                     Chifa Remboursable
                   </span>
                 )}
+                {!med.isReimbursable && med.reimbursementStatus === 'unknown' && (
+                  <span className="px-2 py-0.5 rounded font-medium bg-amber-50 text-amber-800 border border-amber-200">
+                    Remboursement à vérifier
+                  </span>
+                )}
                 {med.isDevice && (
                   <span className="px-2 py-0.5 rounded font-bold bg-purple-50 text-purple-800 border border-purple-200">
                     Outil Diagnostic
@@ -333,10 +373,16 @@ export const LibraryManager: React.FC<LibraryManagerProps> = ({
                 )}
               </div>
 
+              {med.packageDetails && (
+                <div className="text-[10px] text-slate-500 mt-1">
+                  Présentation catalogue : {med.packageDetails}
+                </div>
+              )}
+
               {/* Posologie usuelle */}
               <div className="text-[11px] text-slate-600 mt-2.5 bg-slate-50 p-2 rounded-lg border border-slate-100">
                 <span className="font-bold text-slate-800">Posologie : </span>
-                {med.defaultPosology}
+                {med.defaultPosology || 'À préciser par le prescripteur'}
               </div>
 
               {/* Explication Arabe si présente */}
@@ -354,6 +400,9 @@ export const LibraryManager: React.FC<LibraryManagerProps> = ({
             <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
               <span className="text-[10px] text-slate-400 font-medium">
                 {med.category}
+                {med.catalogSource && (
+                  <span className="block">Source : {med.catalogSource} · {med.catalogVersion} · {med.registrationStatus}</span>
+                )}
               </span>
 
               <div className="flex items-center space-x-1">
@@ -376,6 +425,28 @@ export const LibraryManager: React.FC<LibraryManagerProps> = ({
           </div>
         ))}
       </div>
+
+      {pageCount > 1 && (
+        <div className="flex items-center justify-center gap-3 py-5 text-xs">
+          <button
+            type="button"
+            onClick={() => setCurrentPage(Math.max(0, safePage - 1))}
+            disabled={safePage === 0}
+            className="px-3 py-1.5 rounded-lg border border-slate-200 font-semibold text-slate-700 disabled:opacity-40"
+          >
+            Précédent
+          </button>
+          <span className="text-slate-600">Page {safePage + 1} / {pageCount}</span>
+          <button
+            type="button"
+            onClick={() => setCurrentPage(Math.min(pageCount - 1, safePage + 1))}
+            disabled={safePage >= pageCount - 1}
+            className="px-3 py-1.5 rounded-lg border border-slate-200 font-semibold text-slate-700 disabled:opacity-40"
+          >
+            Suivant
+          </button>
+        </div>
+      )}
 
       {/* MODAL AJOUT / ÉDITION MÉDICAMENT */}
       {showModal && (

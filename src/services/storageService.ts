@@ -4,6 +4,7 @@ import { formatPrescriptionDate } from './boxCalculator';
 
 const STORAGE_KEYS = {
   MEDICINES: 'ordomed_dz_medicines_v4',
+  MEDICINES_META: 'ordomed_dz_medicines_meta_v1',
   PATIENTS: 'ordomed_dz_patients_v2',
   PRESCRIPTIONS: 'ordomed_dz_prescriptions_history_v2',
   DOCTOR_PROFILE: 'ordomed_dz_doctor_profile_v2',
@@ -130,22 +131,78 @@ const INITIAL_PRESCRIPTIONS: Prescription[] = [
 ];
 
 class StorageService {
+  private algerianCatalog: Medicine[] | null = null;
+  private catalogLoadPromise: Promise<Medicine[]> | null = null;
+
+  private getBaseMedicines(): Medicine[] {
+    return this.algerianCatalog
+      ? [...DEFAULT_MEDICINES, ...this.algerianCatalog]
+      : DEFAULT_MEDICINES;
+  }
+
+  loadAlgerianCatalog(): Promise<Medicine[]> {
+    if (this.algerianCatalog) return Promise.resolve(this.getMedicines());
+    if (!this.catalogLoadPromise) {
+      this.catalogLoadPromise = import('../data/medicineCatalogLoader').then(async ({ loadAlgerianMedicineCatalog }) => {
+        this.algerianCatalog = await loadAlgerianMedicineCatalog();
+        return this.getMedicines();
+      });
+    }
+    return this.catalogLoadPromise;
+  }
+
+  private getDeletedMedicineIds(): Set<string> {
+    try {
+      const data = localStorage.getItem(STORAGE_KEYS.MEDICINES_META);
+      const ids = data ? JSON.parse(data) : [];
+      return new Set(Array.isArray(ids) ? ids : []);
+    } catch {
+      return new Set();
+    }
+  }
+
   // --- MEDICINES ---
   getMedicines(): Medicine[] {
     try {
       const data = localStorage.getItem(STORAGE_KEYS.MEDICINES);
-      if (!data) {
-        this.saveMedicines(DEFAULT_MEDICINES);
-        return DEFAULT_MEDICINES;
-      }
-      return JSON.parse(data);
+      const saved: Medicine[] = data ? JSON.parse(data) : [];
+      if (!Array.isArray(saved)) return this.getBaseMedicines();
+
+      const deletedIds = this.getDeletedMedicineIds();
+      const defaults = this.getBaseMedicines();
+      const defaultsById = new Map(defaults.map(medicine => [medicine.id, medicine]));
+      const savedById = new Map(saved.map(medicine => [medicine.id, medicine]));
+      const mergedDefaults = defaults
+        .filter(medicine => !deletedIds.has(medicine.id))
+        .map(medicine => ({ ...medicine, ...savedById.get(medicine.id) }));
+      const savedCustom = saved.filter(medicine =>
+        !defaultsById.has(medicine.id) && !deletedIds.has(medicine.id)
+      );
+
+      return [...mergedDefaults, ...savedCustom];
     } catch {
-      return DEFAULT_MEDICINES;
+      return this.getBaseMedicines();
     }
   }
 
   saveMedicines(medicines: Medicine[]): void {
-    localStorage.setItem(STORAGE_KEYS.MEDICINES, JSON.stringify(medicines));
+    const defaults = this.getBaseMedicines();
+    const defaultsById = new Map(defaults.map(medicine => [medicine.id, medicine]));
+    const currentIds = new Set(medicines.map(medicine => medicine.id));
+    const deletedIds = this.getDeletedMedicineIds();
+
+    for (const medicine of defaults) {
+      if (currentIds.has(medicine.id)) deletedIds.delete(medicine.id);
+      else deletedIds.add(medicine.id);
+    }
+
+    const saved = medicines.filter(medicine => {
+      const defaultMedicine = defaultsById.get(medicine.id);
+      return !defaultMedicine || JSON.stringify(medicine) !== JSON.stringify(defaultMedicine);
+    });
+
+    localStorage.setItem(STORAGE_KEYS.MEDICINES, JSON.stringify(saved));
+    localStorage.setItem(STORAGE_KEYS.MEDICINES_META, JSON.stringify([...deletedIds]));
   }
 
   toggleFavorite(id: string): Medicine[] {

@@ -107,6 +107,7 @@ export const PrescriptionEditor: React.FC<PrescriptionEditorProps> = ({
 
   // Search & Filter State
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
   const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
   // Historique des ordonnances du patient actuellement sélectionné
@@ -157,22 +158,33 @@ export const PrescriptionEditor: React.FC<PrescriptionEditorProps> = ({
   }, [medicines]);
 
   // Catégories
+  const categories = useMemo(
+    () => Array.from(new Set(medicines.map(medicine => medicine.category))).sort((a, b) => a.localeCompare(b, 'fr')),
+    [medicines]
+  );
+
   // Médicaments filtrés
   const filteredMedicines = useMemo(() => {
     return medicines.filter(m => {
+      const query = searchQuery.toLowerCase();
       const matchSearch =
-        m.tradeName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        m.dci.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        m.laboratory.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchSearch;
+        m.tradeName.toLowerCase().includes(query) ||
+        m.dci.toLowerCase().includes(query) ||
+        m.laboratory.toLowerCase().includes(query) ||
+        m.form.toLowerCase().includes(query) ||
+        m.dosage.toLowerCase().includes(query) ||
+        m.category.toLowerCase().includes(query);
+      const matchCategory = selectedCategory === 'all' || m.category === selectedCategory;
+      return matchSearch && matchCategory;
     });
-  }, [medicines, searchQuery]);
+  }, [medicines, searchQuery, selectedCategory]);
 
   // Ajouter un médicament à l'ordonnance
   const handleAddMedicine = (med: Medicine) => {
     const isChronique = prescriptionType === 'chronique';
-    const defaultDuration = med.isDevice ? 1 : isChronique ? 90 : 7;
-    const defaultDailyDose = med.isDevice ? 1 : 2;
+    const hasDefaultPosology = Boolean(med.defaultPosology.trim());
+    const defaultDuration = med.isDevice || !hasDefaultPosology ? 1 : isChronique ? 90 : 7;
+    const defaultDailyDose = med.isDevice || !hasDefaultPosology ? 1 : 2;
 
     const calc = calculateBoxes(med, defaultDailyDose, defaultDuration);
 
@@ -189,7 +201,9 @@ export const PrescriptionEditor: React.FC<PrescriptionEditorProps> = ({
       posology: med.defaultPosology,
       dailyDose: defaultDailyDose,
       durationDays: defaultDuration,
-      durationText: isChronique ? 'Pendant 3 mois (Chifa)' : `Pendant ${defaultDuration} jours`,
+      durationText: !hasDefaultPosology
+        ? 'À préciser'
+        : isChronique ? 'Pendant 3 mois (Chifa)' : `Pendant ${defaultDuration} jours`,
       totalUnitsNeeded: calc.totalUnitsNeeded,
       calculatedBoxes: calc.calculatedBoxes,
       arabicInstructions: med.defaultArabicInstructions || '',
@@ -248,6 +262,11 @@ export const PrescriptionEditor: React.FC<PrescriptionEditorProps> = ({
     }
     if (items.length === 0) {
       showToast('error', 'L\'ordonnance est vide. Ajoutez au moins un médicament.');
+      return false;
+    }
+    const incompleteItem = items.find(item => !item.posology.trim());
+    if (incompleteItem) {
+      showToast('error', `Veuillez préciser la posologie de ${incompleteItem.tradeName} avant d'enregistrer ou d'imprimer.`);
       return false;
     }
     return true;
@@ -899,16 +918,32 @@ export const PrescriptionEditor: React.FC<PrescriptionEditorProps> = ({
                           className="w-full pl-9 pr-3 py-1.5 text-xs font-bold text-slate-800 bg-teal-50/30 border border-teal-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none"
                         />
                       </div>
+                      <select
+                        value={selectedCategory}
+                        onChange={e => setSelectedCategory(e.target.value)}
+                        aria-label="Filtrer les médicaments par catégorie thérapeutique"
+                        className="ml-2 max-w-48 text-[10px] border border-slate-200 rounded-lg px-2 py-1.5 bg-white"
+                      >
+                        <option value="all">Toutes catégories</option>
+                        {categories.map(category => (
+                          <option key={category} value={category}>{category}</option>
+                        ))}
+                      </select>
                     </div>
 
                     {searchQuery.trim().length > 0 && (
                       <div className="absolute z-10 w-full left-0 ml-6 max-h-48 overflow-y-auto divide-y divide-slate-100 border border-slate-200 rounded-xl mt-1 bg-white shadow-xl">
+                        {filteredMedicines.length > 50 && (
+                          <div className="p-2 text-center text-[10px] text-slate-500 bg-slate-50">
+                            {filteredMedicines.length.toLocaleString('fr-DZ')} résultats — affiche les 50 premiers, affinez votre recherche.
+                          </div>
+                        )}
                         {filteredMedicines.length === 0 ? (
                            <div className="p-3 text-center text-xs text-slate-500">
                              Aucun médicament trouvé.
                            </div>
                         ) : (
-                          filteredMedicines.map(med => (
+                          filteredMedicines.slice(0, 50).map(med => (
                             <div
                               key={med.id}
                               onClick={() => handleAddMedicine(med)}

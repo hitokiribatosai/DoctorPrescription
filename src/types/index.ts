@@ -13,9 +13,15 @@ export interface Medicine {
   category: string;             // Ex: "Antalgiques", "Antibiotiques", "Cardiologie", "Dispositifs & Diagnostic"
   laboratory: string;           // Ex: "Saidal", "Biopharm", "Merinal", "Inpha-Médis", "Sanofi", etc.
   isReimbursable: boolean;      // Remboursable CNAS / CASNOS (Carte Chifa)
+  reimbursementStatus?: 'unknown';
   isDevice?: boolean;           // Dispositif médical / Outil de diagnostic clinique (ex: thermomètre, test grossesse)
   isFavorite: boolean;          // Favori pour accès rapide en 1-clic ⭐
   notes?: string;               // Précautions particulières
+  catalogSource?: string;
+  catalogVersion?: string;
+  classificationCode?: string;
+  packageDetails?: string;
+  registrationStatus?: string;
 }
 
 export interface Patient {

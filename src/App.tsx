@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Medicine, Patient, Prescription, DoctorProfile, PrescriptionType, PrescriptionItem } from './types';
 import { storageService } from './services/storageService';
 import { Navbar } from './components/Navbar';
@@ -18,6 +18,24 @@ export function App() {
   );
   const [patients, setPatients] = useState<Patient[]>(storageService.getPatients());
   const [medicines, setMedicines] = useState<Medicine[]>(storageService.getMedicines());
+  const [catalogLoaded, setCatalogLoaded] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    void storageService.loadAlgerianCatalog()
+      .then(loadedMedicines => {
+        if (!active) return;
+        setMedicines(loadedMedicines);
+        setCatalogLoaded(true);
+      })
+      .catch(error => {
+        console.error('Unable to load the Algerian medicine catalog.', error);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   // État de reconduction d'une ordonnance depuis l'historique
   const [prescriptionToDuplicate, setPrescriptionToDuplicate] = useState<{
@@ -103,6 +121,7 @@ export function App() {
           <LibraryManager
             medicines={medicines}
             onRefreshMedicines={refreshMedicines}
+            catalogLoaded={catalogLoaded}
           />
         )}
 
