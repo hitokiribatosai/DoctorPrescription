@@ -746,12 +746,84 @@ export const PrescriptionEditor: React.FC<PrescriptionEditorProps> = ({
                   </div>
                 </div>
 
-                {/* B. FAVORIS (⭐) & DISPOSITIFS DE DIAGNOSTIC 1-CLIC */}
+                {/* B. AJOUT RAPIDE D'UN MÉDICAMENT */}
+                <div className="medicine-search-panel bg-white p-4 rounded-2xl border border-slate-200 shadow-xs space-y-3">
+                  <div className="medicine-search-heading">
+                    <div className="flex items-center space-x-2">
+                      <Search className="w-4 h-4 text-teal-700" />
+                      <span className="text-sm font-bold text-slate-900">Ajouter un médicament</span>
+                    </div>
+                    <p className="text-xs text-slate-500">Recherchez par nom, substance active ou laboratoire.</p>
+                  </div>
+
+                  {/* LIGNE D'AJOUT AUTOCOMPLÉTION (Simule la frappe directe) */}
+                  <div className="medicine-autocomplete relative">
+                    <div className="flex items-center">
+                      <div className="relative flex-1">
+                        <Search className="w-4 h-4 absolute left-3 top-2 text-slate-400" />
+                        <input
+                          type="text"
+                          placeholder="Rechercher par nom commercial, DCI ou laboratoire…"
+                          value={searchQuery}
+                          onChange={e => setSearchQuery(e.target.value)}
+                          className="w-full pl-9 pr-3 py-1.5 text-xs font-bold text-slate-800 bg-teal-50/30 border border-teal-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none"
+                        />
+                      </div>
+                      <select
+                        value={selectedCategory}
+                        onChange={e => setSelectedCategory(e.target.value)}
+                        aria-label="Filtrer les médicaments par catégorie thérapeutique"
+                        className="medicine-category-filter ml-2 max-w-48 text-[10px] border border-slate-200 rounded-lg px-2 py-1.5 bg-white"
+                      >
+                        <option value="all">Toutes catégories</option>
+                        {categories.map(category => (
+                          <option key={category} value={category}>{category}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {searchQuery.trim().length > 0 && (
+                      <div className="medicine-autocomplete-results absolute z-10 w-full left-0 ml-6 max-h-48 overflow-y-auto divide-y divide-slate-100 border border-slate-200 rounded-xl mt-1 bg-white shadow-xl">
+                        {filteredMedicines.length > 50 && (
+                          <div className="p-2 text-center text-[10px] text-slate-500 bg-slate-50">
+                            {filteredMedicines.length.toLocaleString('fr-DZ')} résultats — affiche les 50 premiers, affinez votre recherche.
+                          </div>
+                        )}
+                        {filteredMedicines.length === 0 ? (
+                           <div className="p-3 text-center text-xs text-slate-500">
+                             Aucun médicament trouvé.
+                           </div>
+                        ) : (
+                          filteredMedicines.slice(0, 50).map(med => (
+                            <div
+                              key={med.id}
+                              onClick={() => handleAddMedicine(med)}
+                              className="p-2.5 hover:bg-teal-50 cursor-pointer flex items-center justify-between text-xs transition-colors"
+                            >
+                              <div>
+                                <span className="font-bold text-slate-900">{med.tradeName}</span>{' '}
+                                <span className="text-teal-700 font-semibold text-[11px]">{med.dosage}</span>{' '}
+                                <span className="text-slate-400 text-[10px]">({med.laboratory})</span>
+                                <div className="text-[10px] text-slate-500 mt-0.5">{med.dci}</div>
+                              </div>
+                              <button className="text-teal-700 bg-teal-100 hover:bg-teal-200 px-2 py-1 rounded text-[10px] font-bold">
+                                + Ajouter
+                              </button>
+                            </div>
+                          ))
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                </div>
+
+                {/* C. FAVORIS (⭐) & DISPOSITIFS DE DIAGNOSTIC 1-CLIC */}
                 <div className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-[11px] font-extrabold text-amber-950 uppercase tracking-wider flex items-center space-x-1">
                       <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
-                      <span>Favoris (⭐) & Outils de Diagnostic (1-Clic) :</span>
+                      <span>Favoris et dispositifs médicaux</span>
                     </span>
                   </div>
 
@@ -783,9 +855,7 @@ export const PrescriptionEditor: React.FC<PrescriptionEditorProps> = ({
                   </div>
                 </div>
 
-                {/* Section C (Recherche Globale) supprimée pour être intégrée dans les lignes de prescription (Section D) afin de simuler la frappe directe */}
-
-                {/* D. LISTE DES MÉDICAMENTS PRESCRITS & AJOUT PAR AUTOCOMPLÉTION */}
+                {/* D. LIGNES DE PRESCRIPTION */}
                 <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs space-y-3">
                   <div className="flex items-center justify-between pb-1 border-b border-slate-100">
                      <span className="text-xs font-extrabold text-slate-900 uppercase flex items-center space-x-1.5">
@@ -799,7 +869,7 @@ export const PrescriptionEditor: React.FC<PrescriptionEditorProps> = ({
 
                   {items.length === 0 && (
                     <div className="text-center py-4 text-slate-400 text-xs italic">
-                      Aucun médicament. Commencez à taper ci-dessous ou sélectionnez un favori.
+                      Aucun médicament pour le moment. Utilisez la recherche ci-dessus ou choisissez un favori.
                     </div>
                   )}
                   {items.map((item, index) => (
@@ -904,66 +974,6 @@ export const PrescriptionEditor: React.FC<PrescriptionEditorProps> = ({
                       </div>
                     ))}
                     
-                  {/* LIGNE D'AJOUT AUTOCOMPLÉTION (Simule la frappe directe) */}
-                  <div className="pt-2 border-t-2 border-dashed border-teal-100 mt-2 relative">
-                    <div className="flex items-center">
-                      <span className="font-extrabold text-teal-600 text-xs w-6">{items.length + 1}.</span>
-                      <div className="relative flex-1">
-                        <Search className="w-4 h-4 absolute left-3 top-2 text-slate-400" />
-                        <input
-                          type="text"
-                          placeholder="Rechercher un médicament à ajouter..."
-                          value={searchQuery}
-                          onChange={e => setSearchQuery(e.target.value)}
-                          className="w-full pl-9 pr-3 py-1.5 text-xs font-bold text-slate-800 bg-teal-50/30 border border-teal-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none"
-                        />
-                      </div>
-                      <select
-                        value={selectedCategory}
-                        onChange={e => setSelectedCategory(e.target.value)}
-                        aria-label="Filtrer les médicaments par catégorie thérapeutique"
-                        className="ml-2 max-w-48 text-[10px] border border-slate-200 rounded-lg px-2 py-1.5 bg-white"
-                      >
-                        <option value="all">Toutes catégories</option>
-                        {categories.map(category => (
-                          <option key={category} value={category}>{category}</option>
-                        ))}
-                      </select>
-                    </div>
-
-                    {searchQuery.trim().length > 0 && (
-                      <div className="absolute z-10 w-full left-0 ml-6 max-h-48 overflow-y-auto divide-y divide-slate-100 border border-slate-200 rounded-xl mt-1 bg-white shadow-xl">
-                        {filteredMedicines.length > 50 && (
-                          <div className="p-2 text-center text-[10px] text-slate-500 bg-slate-50">
-                            {filteredMedicines.length.toLocaleString('fr-DZ')} résultats — affiche les 50 premiers, affinez votre recherche.
-                          </div>
-                        )}
-                        {filteredMedicines.length === 0 ? (
-                           <div className="p-3 text-center text-xs text-slate-500">
-                             Aucun médicament trouvé.
-                           </div>
-                        ) : (
-                          filteredMedicines.slice(0, 50).map(med => (
-                            <div
-                              key={med.id}
-                              onClick={() => handleAddMedicine(med)}
-                              className="p-2.5 hover:bg-teal-50 cursor-pointer flex items-center justify-between text-xs transition-colors"
-                            >
-                              <div>
-                                <span className="font-bold text-slate-900">{med.tradeName}</span>{' '}
-                                <span className="text-teal-700 font-semibold text-[11px]">{med.dosage}</span>{' '}
-                                <span className="text-slate-400 text-[10px]">({med.laboratory})</span>
-                                <div className="text-[10px] text-slate-500 mt-0.5">{med.dci}</div>
-                              </div>
-                              <button className="text-teal-700 bg-teal-100 hover:bg-teal-200 px-2 py-1 rounded text-[10px] font-bold">
-                                + Ajouter
-                              </button>
-                            </div>
-                          ))
-                        )}
-                      </div>
-                    )}
-                  </div>
 
                   <div className="pt-2">
                     <input
