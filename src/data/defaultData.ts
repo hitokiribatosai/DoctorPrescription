@@ -49,6 +49,753 @@ export const ARABIC_INSTRUCTION_PRESETS = [
 ];
 
 export const DEFAULT_MEDICINES: Medicine[] = [
+  // ═══════════════════════════════════════════════════════════════════
+  // 1. ANTALGIQUES & ANTIPYRÉTIQUES
+  // ═══════════════════════════════════════════════════════════════════
+  {
+    id: 'med-001', tradeName: 'PARACÉTAMOL SAIDAL', dci: 'Paracétamol',
+    form: 'Comprimé', dosage: '500 mg', unitsPerBox: 20, unitLabel: 'comprimés',
+    defaultPosology: '1 à 2 comprimés 3 fois/jour si douleur ou fièvre (max 3g/j)',
+    defaultArabicInstructions: 'قرص إلى قرصين 3 مرات في اليوم عند الإحساس بالألم أو الحمى (لا تتجاوز 6 أقراص يومياً)',
+    category: 'Antalgiques & Antipyrétiques', laboratory: 'Saidal',
+    isReimbursable: true, isFavorite: true,
+    notes: 'Espacer les prises de 4 à 6 heures.',
+  },
+  {
+    id: 'med-002', tradeName: 'DOLIPRANE', dci: 'Paracétamol',
+    form: 'Comprimé effervescent', dosage: '1000 mg', unitsPerBox: 8, unitLabel: 'comprimés',
+    defaultPosology: '1 cp effervescent 3 fois/jour au besoin',
+    defaultArabicInstructions: 'قرص فوار واحد يُذاب في نصف كأس ماء عند اللزوم (الحد الأقصى 3 أقراص يومياً)',
+    category: 'Antalgiques & Antipyrétiques', laboratory: 'Biopharm / Sanofi',
+    isReimbursable: true, isFavorite: true,
+    notes: 'Dissoudre dans un verre d\'eau.',
+  },
+  {
+    id: 'med-003', tradeName: 'DOLIPRANE SIROP PÉDIATRIQUE', dci: 'Paracétamol',
+    form: 'Suspension buvable (Flacon)', dosage: '2.4% (120ml)', unitsPerBox: 1, unitLabel: 'flacon',
+    defaultPosology: 'Dose-poids x 4/jour (15 mg/kg/prise, max 60 mg/kg/j)',
+    defaultArabicInstructions: 'شراب باراسيتامول للأطفال: جرعة حسب الوزن 4 مرات يومياً مع فاصل 6 ساعات بين الجرعات',
+    category: 'Antalgiques & Antipyrétiques', laboratory: 'Biopharm / Sanofi',
+    isReimbursable: true, isFavorite: true,
+    notes: 'Utiliser la pipette doseuse. Respecter la dose-poids.',
+  },
+  {
+    id: 'med-004', tradeName: 'ASPÉGIC', dci: 'Acétylsalicylate de lysine',
+    form: 'Sachet (poudre)', dosage: '500 mg', unitsPerBox: 20, unitLabel: 'sachets',
+    defaultPosology: '1 sachet 2 à 3 fois/jour au cours des repas',
+    defaultArabicInstructions: 'كيس واحد يُذاب في الماء مرتين إلى 3 مرات يومياً وسط الأكل',
+    category: 'Antalgiques & Antipyrétiques', laboratory: 'Saidal',
+    isReimbursable: true, isFavorite: false,
+    notes: 'CI si ulcère gastrique ou allergie à l\'aspirine.',
+  },
+  {
+    id: 'med-005', tradeName: 'TRAMADOL / CONTRAMAL', dci: 'Tramadol chlorhydrate',
+    form: 'Gélule', dosage: '50 mg', unitsPerBox: 30, unitLabel: 'gélules',
+    defaultPosology: '1 gélule toutes les 6 à 8 heures si douleur intense',
+    defaultArabicInstructions: 'كبسولة واحدة كل 6 إلى 8 ساعات عند الألم الشديد (لا تتجاوز 4 كبسولات يومياً)',
+    category: 'Antalgiques & Antipyrétiques', laboratory: 'Biopharm',
+    isReimbursable: true, isFavorite: false,
+    notes: 'Antalgique palier 2. Ordonnance sécurisée.',
+  },
+
+  // ═══════════════════════════════════════════════════════════════════
+  // 2. ANTI-INFLAMMATOIRES (AINS)
+  // ═══════════════════════════════════════════════════════════════════
+  {
+    id: 'med-010', tradeName: 'DICLOFÉNAC SAIDAL', dci: 'Diclofénac sodique',
+    form: 'Comprimé gastro-résistant', dosage: '50 mg', unitsPerBox: 30, unitLabel: 'comprimés',
+    defaultPosology: '1 cp 2 à 3 fois/jour au milieu des repas',
+    defaultArabicInstructions: 'قرص واحد مرتين إلى 3 مرات يومياً وسط الوجبات حصراً',
+    category: 'Anti-inflammatoires (AINS)', laboratory: 'Saidal',
+    isReimbursable: true, isFavorite: true,
+    notes: 'Prendre impérativement au milieu du repas. Associer un protecteur gastrique.',
+  },
+  {
+    id: 'med-011', tradeName: 'IBUPROFÈNE SAIDAL', dci: 'Ibuprofène',
+    form: 'Comprimé pelliculé', dosage: '400 mg', unitsPerBox: 30, unitLabel: 'comprimés',
+    defaultPosology: '1 cp 3 fois/jour au milieu des repas',
+    defaultArabicInstructions: 'قرص واحد 3 مرات يومياً وسط الوجبات',
+    category: 'Anti-inflammatoires (AINS)', laboratory: 'Saidal',
+    isReimbursable: true, isFavorite: true,
+  },
+  {
+    id: 'med-012', tradeName: 'KÉTOPROFÈNE / BI-PROFENID', dci: 'Kétoprofène',
+    form: 'Comprimé sécable', dosage: '100 mg', unitsPerBox: 20, unitLabel: 'comprimés',
+    defaultPosology: '1 cp matin et soir au milieu du repas',
+    defaultArabicInstructions: 'قرص واحد صباحاً ومساءً وسط الأكل مع كأس ماء كبير',
+    category: 'Anti-inflammatoires (AINS)', laboratory: 'Merinal',
+    isReimbursable: true, isFavorite: false,
+  },
+  {
+    id: 'med-013', tradeName: 'VOLTARÈNE GEL', dci: 'Diclofénac diéthylamine',
+    form: 'Gel topique', dosage: '1% (50g)', unitsPerBox: 1, unitLabel: 'tube',
+    defaultPosology: 'Appliquer localement 3 fois/jour en massant légèrement',
+    defaultArabicInstructions: 'يُدهن موضعياً 3 مرات يومياً على المنطقة المؤلمة مع تدليك خفيف',
+    category: 'Anti-inflammatoires (AINS)', laboratory: 'Novartis / Biopharm',
+    isReimbursable: true, isFavorite: false,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════
+  // 3. CORTICOÏDES
+  // ═══════════════════════════════════════════════════════════════════
+  {
+    id: 'med-015', tradeName: 'PREDNISONE / CORTANCYL', dci: 'Prednisone',
+    form: 'Comprimé sécable', dosage: '5 mg', unitsPerBox: 30, unitLabel: 'comprimés',
+    defaultPosology: 'Posologie selon indication. En 1 prise le matin au petit-déjeuner.',
+    defaultArabicInstructions: 'الجرعة حسب إرشادات الطبيب. تؤخذ في جرعة واحدة صباحاً مع الفطور',
+    category: 'Corticoïdes', laboratory: 'Sanofi / Saidal',
+    isReimbursable: true, isFavorite: false,
+    notes: 'Prise matinale impérative. Décroissance progressive.',
+  },
+  {
+    id: 'med-016', tradeName: 'CÉLESTÈNE (gouttes)', dci: 'Bétaméthasone',
+    form: 'Gouttes buvables (flacon)', dosage: '0.05% (30ml)', unitsPerBox: 1, unitLabel: 'flacon',
+    defaultPosology: '10 gouttes/kg/jour en 1 prise le matin',
+    defaultArabicInstructions: 'تؤخذ الجرعة المحددة حسب الوزن صباحاً بعد الفطور لمدة قصيرة',
+    category: 'Corticoïdes', laboratory: 'Biopharm',
+    isReimbursable: true, isFavorite: false,
+    notes: 'Prise matinale impérative. Très utilisé en pédiatrie.',
+  },
+  {
+    id: 'med-017', tradeName: 'DEXAMÉTHASONE SAIDAL', dci: 'Dexaméthasone',
+    form: 'Comprimé', dosage: '0.5 mg', unitsPerBox: 20, unitLabel: 'comprimés',
+    defaultPosology: 'Selon indication. 1 à 3 cp/jour en une seule prise matinale.',
+    defaultArabicInstructions: 'حسب إرشادات الطبيب. قرص إلى 3 أقراص في جرعة واحدة صباحاً',
+    category: 'Corticoïdes', laboratory: 'Saidal',
+    isReimbursable: true, isFavorite: false,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════
+  // 4. ANTIBIOTIQUES
+  // ═══════════════════════════════════════════════════════════════════
+  {
+    id: 'med-020', tradeName: 'AMOXICILLINE SAIDAL', dci: 'Amoxicilline',
+    form: 'Gélule', dosage: '500 mg', unitsPerBox: 24, unitLabel: 'gélules',
+    defaultPosology: '2 gél. matin et soir (ou 1 gél. 3x/jour) pendant 7 jours',
+    defaultArabicInstructions: 'كبسولتان صباحاً ومساءً وسط الأكل لمدة 7 أيام بانتظام',
+    category: 'Antibiotiques', laboratory: 'Saidal',
+    isReimbursable: true, isFavorite: true,
+    notes: 'Bien respecter la durée du traitement.',
+  },
+  {
+    id: 'med-021', tradeName: 'AMOXICILLINE SIROP', dci: 'Amoxicilline',
+    form: 'Poudre pour suspension buvable', dosage: '250 mg/5ml (60ml)', unitsPerBox: 1, unitLabel: 'flacon',
+    defaultPosology: 'Dose-poids : 25 à 50 mg/kg/jour en 2 à 3 prises',
+    defaultArabicInstructions: 'شراب أموكسيسيلين: جرعة حسب وزن الطفل مقسمة على جرعتين إلى 3 يومياً',
+    category: 'Antibiotiques', laboratory: 'Saidal',
+    isReimbursable: true, isFavorite: true,
+    notes: 'Forme pédiatrique. Agiter le flacon avant utilisation.',
+  },
+  {
+    id: 'med-022', tradeName: 'AUGMENTIN / CO-AMODEX', dci: 'Amoxicilline + Acide clavulanique',
+    form: 'Comprimé pelliculé', dosage: '1g/125mg', unitsPerBox: 14, unitLabel: 'comprimés',
+    defaultPosology: '1 cp matin et soir au début des repas pendant 7 jours',
+    defaultArabicInstructions: 'قرص واحد صباحاً ومساءً في بداية الوجبة كل 12 ساعة لمدة 7 أيام',
+    category: 'Antibiotiques', laboratory: 'Biopharm',
+    isReimbursable: true, isFavorite: true,
+    notes: 'À prendre au début du repas pour limiter les effets digestifs.',
+  },
+  {
+    id: 'med-023', tradeName: 'AUGMENTIN SIROP', dci: 'Amoxicilline + Acide clavulanique',
+    form: 'Poudre pour suspension buvable', dosage: '100mg/12.5mg/ml (60ml)', unitsPerBox: 1, unitLabel: 'flacon',
+    defaultPosology: 'Dose-poids : 80 mg/kg/jour d\'amoxicilline en 2 prises',
+    defaultArabicInstructions: 'شراب أوغمنتين: الجرعة حسب وزن الطفل مقسمة على جرعتين يومياً',
+    category: 'Antibiotiques', laboratory: 'Biopharm',
+    isReimbursable: true, isFavorite: true,
+    notes: 'Forme pédiatrique. Conserver au réfrigérateur après reconstitution.',
+  },
+  {
+    id: 'med-024', tradeName: 'AZITHROMYCINE / AZIX', dci: 'Azithromycine',
+    form: 'Comprimé pelliculé', dosage: '500 mg', unitsPerBox: 3, unitLabel: 'comprimés',
+    defaultPosology: '1 cp/jour en une seule prise pendant 3 jours',
+    defaultArabicInstructions: 'قرص واحد يومياً في نفس التوقيت لمدة 3 أيام متتالية',
+    category: 'Antibiotiques', laboratory: 'Merinal',
+    isReimbursable: true, isFavorite: true,
+    notes: 'Traitement court de 3 jours.',
+  },
+  {
+    id: 'med-025', tradeName: 'CIPROFLOXACINE SAIDAL', dci: 'Ciprofloxacine',
+    form: 'Comprimé pelliculé', dosage: '500 mg', unitsPerBox: 10, unitLabel: 'comprimés',
+    defaultPosology: '1 cp matin et soir pendant 5 à 7 jours',
+    defaultArabicInstructions: 'قرص واحد صباحاً ومساءً لمدة 5 إلى 7 أيام مع شرب كمية كافية من الماء',
+    category: 'Antibiotiques', laboratory: 'Saidal',
+    isReimbursable: true, isFavorite: false,
+    notes: 'Fluoroquinolone. Boire abondamment. Attention aux tendinopathies.',
+  },
+  {
+    id: 'med-026', tradeName: 'MÉTRONIDAZOLE / FLAGYL', dci: 'Métronidazole',
+    form: 'Comprimé', dosage: '500 mg', unitsPerBox: 20, unitLabel: 'comprimés',
+    defaultPosology: '1 cp 2 à 3 fois/jour au cours des repas',
+    defaultArabicInstructions: 'قرص واحد مرتين إلى 3 مرات يومياً وسط الأكل (الامتناع التام عن الكحول)',
+    category: 'Antibiotiques', laboratory: 'Saidal',
+    isReimbursable: true, isFavorite: false,
+  },
+  {
+    id: 'med-027', tradeName: 'CÉFIXIME / OROKEN', dci: 'Céfixime',
+    form: 'Comprimé pelliculé', dosage: '200 mg', unitsPerBox: 10, unitLabel: 'comprimés',
+    defaultPosology: '1 cp matin et soir au cours du repas pendant 5 à 7 jours',
+    defaultArabicInstructions: 'قرص واحد صباحاً ومساءً وسط الأكل لمدة 5 إلى 7 أيام',
+    category: 'Antibiotiques', laboratory: 'El Kendi / Sanofi',
+    isReimbursable: true, isFavorite: false,
+  },
+  {
+    id: 'med-028', tradeName: 'ZINNAT / CÉFUROXIME', dci: 'Céfuroxime axétil',
+    form: 'Comprimé', dosage: '500 mg', unitsPerBox: 10, unitLabel: 'comprimés',
+    defaultPosology: '1 cp matin et soir au milieu des repas pendant 5 à 7 jours',
+    defaultArabicInstructions: 'قرص واحد صباحاً ومساءً وسط الأكل لمدة 5 إلى 7 أيام',
+    category: 'Antibiotiques', laboratory: 'GSK',
+    isReimbursable: true, isFavorite: false,
+  },
+  {
+    id: 'med-029', tradeName: 'CLARITHROMYCINE / ZECLAR', dci: 'Clarithromycine',
+    form: 'Comprimé pelliculé', dosage: '500 mg', unitsPerBox: 14, unitLabel: 'comprimés',
+    defaultPosology: '1 cp matin et soir pendant 7 jours',
+    defaultArabicInstructions: 'قرص واحد صباحاً ومساءً لمدة 7 أيام',
+    category: 'Antibiotiques', laboratory: 'Abbott / Biopharm',
+    isReimbursable: true, isFavorite: false,
+  },
+  {
+    id: 'med-030', tradeName: 'COTRIMOXAZOLE / BACTRIM', dci: 'Sulfaméthoxazole + Triméthoprime',
+    form: 'Comprimé', dosage: '800/160 mg', unitsPerBox: 20, unitLabel: 'comprimés',
+    defaultPosology: '1 cp matin et soir pendant 5 jours',
+    defaultArabicInstructions: 'قرص واحد صباحاً ومساءً لمدة 5 أيام مع شرب كمية كافية من الماء',
+    category: 'Antibiotiques', laboratory: 'Saidal',
+    isReimbursable: true, isFavorite: false,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════
+  // 5. GASTRO-ENTÉROLOGIE
+  // ═══════════════════════════════════════════════════════════════════
+  {
+    id: 'med-035', tradeName: 'OMÉPRAZOLE / MOPRAL', dci: 'Oméprazole',
+    form: 'Gélule gastro-résistante', dosage: '20 mg', unitsPerBox: 28, unitLabel: 'gélules',
+    defaultPosology: '1 gél. le matin à jeun, 30 min avant le petit-déjeuner',
+    defaultArabicInstructions: 'كبسولة واحدة صباحاً على الريق قبل الفطور بنصف ساعة',
+    category: 'Gastro-entérologie', laboratory: 'Biopharm',
+    isReimbursable: true, isFavorite: true,
+    notes: 'Avaler sans croquer avec un verre d\'eau.',
+  },
+  {
+    id: 'med-036', tradeName: 'ÉSOMÉPRAZOLE / INEXIUM', dci: 'Ésoméprazole',
+    form: 'Comprimé gastro-résistant', dosage: '20 mg', unitsPerBox: 28, unitLabel: 'comprimés',
+    defaultPosology: '1 cp le matin à jeun pendant 4 semaines',
+    defaultArabicInstructions: 'قرص واحد صباحاً على الريق لمدة 4 أسابيع',
+    category: 'Gastro-entérologie', laboratory: 'AstraZeneca / El Kendi',
+    isReimbursable: true, isFavorite: false,
+  },
+  {
+    id: 'med-037', tradeName: 'TRIMÉBUTINE / DEBRIDAT', dci: 'Trimébutine',
+    form: 'Comprimé', dosage: '100 mg', unitsPerBox: 30, unitLabel: 'comprimés',
+    defaultPosology: '1 cp 3 fois/jour avant les repas',
+    defaultArabicInstructions: 'قرص واحد 3 مرات يومياً قبل الوجبات الرئيسية بنصف ساعة',
+    category: 'Gastro-entérologie', laboratory: 'Inpha-Médis',
+    isReimbursable: true, isFavorite: false,
+  },
+  {
+    id: 'med-038', tradeName: 'SMECTA', dci: 'Diosmectite',
+    form: 'Sachet (poudre)', dosage: '3 g', unitsPerBox: 30, unitLabel: 'sachets',
+    defaultPosology: '1 sachet 3 fois/jour entre les repas',
+    defaultArabicInstructions: 'كيس واحد يُذاب في نصف كأس ماء 3 مرات يومياً بين الوجبات',
+    category: 'Gastro-entérologie', laboratory: 'Ipsen',
+    isReimbursable: true, isFavorite: true,
+  },
+  {
+    id: 'med-039', tradeName: 'SPASFON', dci: 'Phloroglucinol',
+    form: 'Comprimé enrobé', dosage: '80 mg', unitsPerBox: 30, unitLabel: 'comprimés',
+    defaultPosology: '2 cp au moment de la crise, renouvelable (max 6/j)',
+    defaultArabicInstructions: 'قرصان عند المغص، يمكن إعادتها عند الحاجة (كحد أقصى 6 أقراص يومياً)',
+    category: 'Gastro-entérologie', laboratory: 'Teva / Inpha',
+    isReimbursable: true, isFavorite: true,
+  },
+  {
+    id: 'med-040', tradeName: 'MÉTOCLOPRAMIDE / PRIMPÉRAN', dci: 'Métoclopramide',
+    form: 'Comprimé', dosage: '10 mg', unitsPerBox: 30, unitLabel: 'comprimés',
+    defaultPosology: '1 cp 15 min avant les repas, 3 fois/jour (max 5 jours)',
+    defaultArabicInstructions: 'قرص واحد قبل الوجبة بربع ساعة 3 مرات يومياً لمدة 5 أيام كحد أقصى',
+    category: 'Gastro-entérologie', laboratory: 'Sanofi / Saidal',
+    isReimbursable: true, isFavorite: false,
+  },
+  {
+    id: 'med-041', tradeName: 'DOMPÉRIDONE / MOTILIUM', dci: 'Dompéridone',
+    form: 'Comprimé pelliculé', dosage: '10 mg', unitsPerBox: 30, unitLabel: 'comprimés',
+    defaultPosology: '1 cp 3 fois/jour 15 à 30 min avant les repas',
+    defaultArabicInstructions: 'قرص واحد 3 مرات يومياً قبل الوجبة بربع ساعة',
+    category: 'Gastro-entérologie', laboratory: 'Janssen / Biopharm',
+    isReimbursable: true, isFavorite: false,
+  },
+  {
+    id: 'med-042', tradeName: 'LOPÉRAMIDE / IMODIUM', dci: 'Lopéramide',
+    form: 'Gélule', dosage: '2 mg', unitsPerBox: 20, unitLabel: 'gélules',
+    defaultPosology: '2 gél. d\'emblée puis 1 gél. après chaque selle liquide (max 8/j)',
+    defaultArabicInstructions: 'كبسولتان في البداية ثم كبسولة بعد كل إسهال (كحد أقصى 8 كبسولات يومياً)',
+    category: 'Gastro-entérologie', laboratory: 'Janssen / Saidal',
+    isReimbursable: true, isFavorite: false,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════
+  // 6. CARDIOLOGIE & HYPERTENSION
+  // ═══════════════════════════════════════════════════════════════════
+  {
+    id: 'med-045', tradeName: 'AMLODIPINE / AMLOC', dci: 'Amlodipine',
+    form: 'Comprimé', dosage: '5 mg', unitsPerBox: 30, unitLabel: 'comprimés',
+    defaultPosology: '1 cp par jour le matin (Traitement au long cours)',
+    defaultArabicInstructions: 'قرص واحد صباحاً كل يوم بانتظام في نفس الوقت',
+    category: 'Cardiologie & HTA', laboratory: 'Merinal',
+    isReimbursable: true, isFavorite: true,
+    notes: 'Surveiller la tension artérielle. QSP 3 mois.',
+  },
+  {
+    id: 'med-046', tradeName: 'ENALAPRIL / RENITEC', dci: 'Énalapril',
+    form: 'Comprimé sécable', dosage: '20 mg', unitsPerBox: 28, unitLabel: 'comprimés',
+    defaultPosology: '1 cp par jour le matin',
+    defaultArabicInstructions: 'قرص واحد صباحاً كل يوم بانتظام',
+    category: 'Cardiologie & HTA', laboratory: 'MSD / Biopharm',
+    isReimbursable: true, isFavorite: false,
+  },
+  {
+    id: 'med-047', tradeName: 'LOSARTAN / COZAAR', dci: 'Losartan potassium',
+    form: 'Comprimé pelliculé', dosage: '50 mg', unitsPerBox: 28, unitLabel: 'comprimés',
+    defaultPosology: '1 cp par jour',
+    defaultArabicInstructions: 'قرص واحد يومياً بانتظام',
+    category: 'Cardiologie & HTA', laboratory: 'MSD / El Kendi',
+    isReimbursable: true, isFavorite: false,
+  },
+  {
+    id: 'med-048', tradeName: 'ATORVASTATINE / TAHOR', dci: 'Atorvastatine',
+    form: 'Comprimé pelliculé', dosage: '20 mg', unitsPerBox: 30, unitLabel: 'comprimés',
+    defaultPosology: '1 cp le soir au coucher',
+    defaultArabicInstructions: 'قرص واحد في المساء قبل النوم بانتظام',
+    category: 'Cardiologie & HTA', laboratory: 'Beker',
+    isReimbursable: true, isFavorite: false,
+    notes: 'Bilan lipidique et hépatique régulier.',
+  },
+  {
+    id: 'med-049', tradeName: 'KARDÉGIC', dci: 'Acétylsalicylate de lysine',
+    form: 'Sachet', dosage: '75 mg', unitsPerBox: 30, unitLabel: 'sachets',
+    defaultPosology: '1 sachet/jour au milieu du déjeuner (Traitement au long cours)',
+    defaultArabicInstructions: 'كيس واحد يومياً وسط وجبة الغداء بانتظام',
+    category: 'Cardiologie & HTA', laboratory: 'Sanofi / Saidal',
+    isReimbursable: true, isFavorite: true,
+    notes: 'Prévention cardiovasculaire. QSP 3 mois.',
+  },
+  {
+    id: 'med-050', tradeName: 'BISOPROLOL / CONCOR', dci: 'Bisoprolol',
+    form: 'Comprimé pelliculé', dosage: '5 mg', unitsPerBox: 30, unitLabel: 'comprimés',
+    defaultPosology: '1 cp le matin',
+    defaultArabicInstructions: 'قرص واحد صباحاً كل يوم',
+    category: 'Cardiologie & HTA', laboratory: 'Merck / Merinal',
+    isReimbursable: true, isFavorite: false,
+    notes: 'Ne pas arrêter brutalement.',
+  },
+  {
+    id: 'med-051', tradeName: 'FUROSÉMIDE / LASILIX', dci: 'Furosémide',
+    form: 'Comprimé sécable', dosage: '40 mg', unitsPerBox: 30, unitLabel: 'comprimés',
+    defaultPosology: '1 cp le matin à jeun',
+    defaultArabicInstructions: 'قرص واحد صباحاً على الريق',
+    category: 'Cardiologie & HTA', laboratory: 'Sanofi / Saidal',
+    isReimbursable: true, isFavorite: false,
+    notes: 'Diurétique. Surveiller le potassium.',
+  },
+
+  // ═══════════════════════════════════════════════════════════════════
+  // 7. DIABÉTOLOGIE & MÉTABOLISME
+  // ═══════════════════════════════════════════════════════════════════
+  {
+    id: 'med-055', tradeName: 'METFORMINE / GLUCOPHAGE', dci: 'Metformine chlorhydrate',
+    form: 'Comprimé pelliculé', dosage: '850 mg', unitsPerBox: 30, unitLabel: 'comprimés',
+    defaultPosology: '1 cp 2 fois/jour à la fin des repas (matin et soir)',
+    defaultArabicInstructions: 'قرص واحد في نهاية الفطور وقرص في نهاية العشاء يومياً',
+    category: 'Diabète & Métabolisme', laboratory: 'Saidal',
+    isReimbursable: true, isFavorite: true,
+    notes: 'Prendre à la fin du repas pour une meilleure tolérance digestive. QSP 3 mois.',
+  },
+  {
+    id: 'med-056', tradeName: 'GLIMÉPIRIDE / AMAREL', dci: 'Glimépiride',
+    form: 'Comprimé', dosage: '2 mg', unitsPerBox: 30, unitLabel: 'comprimés',
+    defaultPosology: '1 cp/jour avant le petit-déjeuner',
+    defaultArabicInstructions: 'قرص واحد يومياً قبل فطور الصباح مباشرة',
+    category: 'Diabète & Métabolisme', laboratory: 'Sanofi / Saidal',
+    isReimbursable: true, isFavorite: false,
+    notes: 'Risque d\'hypoglycémie. Manger immédiatement après.',
+  },
+  {
+    id: 'med-057', tradeName: 'GLICLAZIDE / DIAMICRON', dci: 'Gliclazide',
+    form: 'Comprimé à libération modifiée', dosage: '30 mg', unitsPerBox: 30, unitLabel: 'comprimés',
+    defaultPosology: '1 à 3 cp/jour au petit-déjeuner en une seule prise',
+    defaultArabicInstructions: 'قرص إلى 3 أقراص صباحاً مع وجبة الإفطار',
+    category: 'Diabète & Métabolisme', laboratory: 'Servier / Biopharm',
+    isReimbursable: true, isFavorite: false,
+  },
+  {
+    id: 'med-058', tradeName: 'INSULINE MIXTARD 30', dci: 'Insuline humaine biphasique',
+    form: 'Stylo prérempli (FlexPen)', dosage: '100 UI/ml (3ml)', unitsPerBox: 5, unitLabel: 'stylos',
+    defaultPosology: 'Injection SC selon protocole (matin et soir avant les repas)',
+    defaultArabicInstructions: 'حقنة تحت الجلد صباحاً ومساءً قبل الوجبة حسب الجرعة المحددة',
+    category: 'Diabète & Métabolisme', laboratory: 'Novo Nordisk',
+    isReimbursable: true, isFavorite: false,
+    notes: 'Conserver au réfrigérateur. Le stylo en cours d\'utilisation se conserve à T° ambiante 1 mois.',
+  },
+
+  // ═══════════════════════════════════════════════════════════════════
+  // 8. PNEUMOLOGIE, ALLERGIE & ORL
+  // ═══════════════════════════════════════════════════════════════════
+  {
+    id: 'med-060', tradeName: 'VENTOLINE', dci: 'Salbutamol',
+    form: 'Aérosol-doseur pressurisé', dosage: '100 µg/dose', unitsPerBox: 1, unitLabel: 'flacon (200 doses)',
+    defaultPosology: '1 à 2 bouffées en cas de crise (peut se répéter après 15 min)',
+    defaultArabicInstructions: 'بخة إلى بختين في الفم عند ضيق التنفس (رج القارورة جيداً قبل الاستعمال)',
+    category: 'Pneumologie & Allergie', laboratory: 'Saidal / GSK',
+    isReimbursable: true, isFavorite: true,
+    notes: 'Agiter avant emploi. Rincer la bouche après.',
+  },
+  {
+    id: 'med-061', tradeName: 'CÉTIRIZINE / ZYRTEC', dci: 'Cétirizine',
+    form: 'Comprimé pelliculé', dosage: '10 mg', unitsPerBox: 20, unitLabel: 'comprimés',
+    defaultPosology: '1 cp le soir au coucher',
+    defaultArabicInstructions: 'قرص واحد مساءً قبل النوم',
+    category: 'Pneumologie & Allergie', laboratory: 'Biopharm / UCB',
+    isReimbursable: true, isFavorite: true,
+  },
+  {
+    id: 'med-062', tradeName: 'DESLORATADINE / AERIUS', dci: 'Desloratadine',
+    form: 'Comprimé pelliculé', dosage: '5 mg', unitsPerBox: 30, unitLabel: 'comprimés',
+    defaultPosology: '1 cp/jour à n\'importe quel moment',
+    defaultArabicInstructions: 'قرص واحد يومياً في أي وقت',
+    category: 'Pneumologie & Allergie', laboratory: 'MSD / Biopharm',
+    isReimbursable: true, isFavorite: false,
+  },
+  {
+    id: 'med-063', tradeName: 'MONTELUKAST / SINGULAIR', dci: 'Montélukast',
+    form: 'Comprimé pelliculé', dosage: '10 mg', unitsPerBox: 28, unitLabel: 'comprimés',
+    defaultPosology: '1 cp le soir au coucher',
+    defaultArabicInstructions: 'قرص واحد مساءً قبل النوم بانتظام',
+    category: 'Pneumologie & Allergie', laboratory: 'MSD / El Kendi',
+    isReimbursable: true, isFavorite: false,
+  },
+  {
+    id: 'med-064', tradeName: 'RHINATHIOL CARBOCISTÉINE', dci: 'Carbocistéine',
+    form: 'Sirop adulte', dosage: '5% (200ml)', unitsPerBox: 1, unitLabel: 'flacon',
+    defaultPosology: '1 cuillère à soupe 3 fois/jour',
+    defaultArabicInstructions: 'ملعقة كبيرة 3 مرات يومياً',
+    category: 'Pneumologie & Allergie', laboratory: 'Sanofi',
+    isReimbursable: true, isFavorite: false,
+  },
+  {
+    id: 'med-065', tradeName: 'AMBROXOL / MUCOSOLVAN', dci: 'Ambroxol',
+    form: 'Sirop', dosage: '30 mg/5ml (100ml)', unitsPerBox: 1, unitLabel: 'flacon',
+    defaultPosology: '1 cuillère à café 3 fois/jour',
+    defaultArabicInstructions: 'ملعقة صغيرة 3 مرات يومياً',
+    category: 'Pneumologie & Allergie', laboratory: 'Boehringer / Biopharm',
+    isReimbursable: true, isFavorite: false,
+  },
+  {
+    id: 'med-066', tradeName: 'PHYSIOMER / SÉRUM PHYSIOLOGIQUE NASAL', dci: 'Eau de mer / NaCl 0.9%',
+    form: 'Spray nasal', dosage: 'Isotonique (135ml)', unitsPerBox: 1, unitLabel: 'flacon',
+    defaultPosology: '2 à 3 pulvérisations dans chaque narine, plusieurs fois/jour',
+    defaultArabicInstructions: 'رشتين إلى 3 في كل فتحة أنف عدة مرات يومياً لتنظيف الأنف',
+    category: 'Pneumologie & Allergie', laboratory: 'Officine',
+    isReimbursable: false, isFavorite: true,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════
+  // 9. DERMATOLOGIE
+  // ═══════════════════════════════════════════════════════════════════
+  {
+    id: 'med-070', tradeName: 'FUCIDINE', dci: 'Acide fusidique',
+    form: 'Crème', dosage: '2% (15g)', unitsPerBox: 1, unitLabel: 'tube',
+    defaultPosology: 'Application locale 2 fois/jour sur la zone affectée',
+    defaultArabicInstructions: 'تطبيق مرتين يومياً على المنطقة المصابة بعد تنظيفها',
+    category: 'Dermatologie', laboratory: 'Leo / Saidal',
+    isReimbursable: true, isFavorite: false,
+  },
+  {
+    id: 'med-071', tradeName: 'DIPROSONE', dci: 'Bétaméthasone dipropionate',
+    form: 'Pommade', dosage: '0.05% (30g)', unitsPerBox: 1, unitLabel: 'tube',
+    defaultPosology: '1 application/jour en couche mince',
+    defaultArabicInstructions: 'طبقة رقيقة مرة واحدة يومياً على المنطقة المصابة',
+    category: 'Dermatologie', laboratory: 'MSD / Biopharm',
+    isReimbursable: true, isFavorite: false,
+    notes: 'Dermocorticoïde fort. Ne pas appliquer sur le visage.',
+  },
+  {
+    id: 'med-072', tradeName: 'KÉTOCONAZOLE CRÈME', dci: 'Kétoconazole',
+    form: 'Crème', dosage: '2% (30g)', unitsPerBox: 1, unitLabel: 'tube',
+    defaultPosology: '1 application/jour pendant 2 à 4 semaines',
+    defaultArabicInstructions: 'تطبيق مرة واحدة يومياً لمدة أسبوعين إلى 4 أسابيع',
+    category: 'Dermatologie', laboratory: 'Janssen / Saidal',
+    isReimbursable: true, isFavorite: false,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════
+  // 10. OPHTALMOLOGIE
+  // ═══════════════════════════════════════════════════════════════════
+  {
+    id: 'med-075', tradeName: 'TOBRAMYCINE COLLYRE / TOBREX', dci: 'Tobramycine',
+    form: 'Collyre (flacon)', dosage: '0.3% (5ml)', unitsPerBox: 1, unitLabel: 'flacon',
+    defaultPosology: '1 à 2 gouttes dans l\'œil atteint, 4 fois/jour pendant 7 jours',
+    defaultArabicInstructions: 'قطرة إلى قطرتين في العين المصابة 4 مرات يومياً لمدة 7 أيام',
+    category: 'Ophtalmologie', laboratory: 'Novartis / Saidal',
+    isReimbursable: true, isFavorite: false,
+  },
+  {
+    id: 'med-076', tradeName: 'LARMES ARTIFICIELLES / REFRESH', dci: 'Carmellose sodique',
+    form: 'Collyre unidose', dosage: '0.5%', unitsPerBox: 30, unitLabel: 'unidoses',
+    defaultPosology: '1 goutte dans chaque œil, 3 à 6 fois/jour au besoin',
+    defaultArabicInstructions: 'قطرة واحدة في كل عين 3 إلى 6 مرات يومياً عند الحاجة',
+    category: 'Ophtalmologie', laboratory: 'Allergan',
+    isReimbursable: true, isFavorite: false,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════
+  // 11. PSYCHIATRIE & NEUROLOGIE
+  // ═══════════════════════════════════════════════════════════════════
+  {
+    id: 'med-080', tradeName: 'BROMAZÉPAM / LEXOMIL', dci: 'Bromazépam',
+    form: 'Comprimé sécable', dosage: '6 mg', unitsPerBox: 30, unitLabel: 'comprimés',
+    defaultPosology: '¼ cp matin, ¼ cp midi, ½ cp le soir',
+    defaultArabicInstructions: 'ربع قرص صباحاً، ربع قرص ظهراً، نصف قرص مساءً',
+    category: 'Psychiatrie & Neurologie', laboratory: 'Roche / Saidal',
+    isReimbursable: true, isFavorite: false,
+    notes: 'Ordonnance sécurisée. Durée limitée à 12 semaines.',
+  },
+  {
+    id: 'med-081', tradeName: 'AMITRIPTYLINE / LAROXYL', dci: 'Amitriptyline',
+    form: 'Comprimé pelliculé', dosage: '25 mg', unitsPerBox: 30, unitLabel: 'comprimés',
+    defaultPosology: '1 cp le soir au coucher (dose progressive)',
+    defaultArabicInstructions: 'قرص واحد مساءً قبل النوم (يبدأ بجرعة صغيرة تُزاد تدريجياً)',
+    category: 'Psychiatrie & Neurologie', laboratory: 'Sanofi / Biopharm',
+    isReimbursable: true, isFavorite: false,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════
+  // 12. VITAMINES & SUPPLÉMENTS
+  // ═══════════════════════════════════════════════════════════════════
+  {
+    id: 'med-085', tradeName: 'VITAMINE D3 / STÉROGYL', dci: 'Cholécalciférol (Vitamine D3)',
+    form: 'Ampoule buvable', dosage: '200 000 UI', unitsPerBox: 1, unitLabel: 'ampoule',
+    defaultPosology: '1 ampoule à boire tous les 3 mois',
+    defaultArabicInstructions: 'أمبولة واحدة تُشرب كل 3 أشهر',
+    category: 'Vitamines & Suppléments', laboratory: 'Bayer / Saidal',
+    isReimbursable: true, isFavorite: true,
+  },
+  {
+    id: 'med-086', tradeName: 'FER + ACIDE FOLIQUE / TARDYFERON', dci: 'Sulfate ferreux + Acide folique',
+    form: 'Comprimé pelliculé', dosage: '80mg Fe / 0.35mg AF', unitsPerBox: 30, unitLabel: 'comprimés',
+    defaultPosology: '1 cp/jour à jeun avec un jus d\'orange',
+    defaultArabicInstructions: 'قرص واحد يومياً على الريق مع عصير برتقال لتسهيل الامتصاص',
+    category: 'Vitamines & Suppléments', laboratory: 'Pierre Fabre / Biopharm',
+    isReimbursable: true, isFavorite: true,
+    notes: 'Selles noires normales. Prendre à distance du thé et du café (2h).',
+  },
+  {
+    id: 'med-087', tradeName: 'CALCIUM + VITAMINE D3 / CALTRATE', dci: 'Carbonate de calcium + Cholécalciférol',
+    form: 'Comprimé à croquer/avaler', dosage: '600mg Ca / 400 UI D3', unitsPerBox: 30, unitLabel: 'comprimés',
+    defaultPosology: '1 cp 2 fois/jour au cours des repas',
+    defaultArabicInstructions: 'قرص واحد مرتين يومياً وسط الوجبات',
+    category: 'Vitamines & Suppléments', laboratory: 'Pfizer / Biopharm',
+    isReimbursable: true, isFavorite: false,
+  },
+  {
+    id: 'med-088', tradeName: 'ACIDE FOLIQUE', dci: 'Acide folique (Vitamine B9)',
+    form: 'Comprimé', dosage: '5 mg', unitsPerBox: 20, unitLabel: 'comprimés',
+    defaultPosology: '1 cp/jour',
+    defaultArabicInstructions: 'قرص واحد يومياً',
+    category: 'Vitamines & Suppléments', laboratory: 'Saidal',
+    isReimbursable: true, isFavorite: true,
+    notes: 'Essentiel en périconceptionnel et grossesse.',
+  },
+
+  // ═══════════════════════════════════════════════════════════════════
+  // 13. ENDOCRINOLOGIE & THYROÏDE
+  // ═══════════════════════════════════════════════════════════════════
+  {
+    id: 'med-090', tradeName: 'LÉVOTHYROXINE / EUTHYROX', dci: 'Lévothyroxine sodique',
+    form: 'Comprimé sécable', dosage: '50 µg', unitsPerBox: 30, unitLabel: 'comprimés',
+    defaultPosology: '1 cp/jour le matin à jeun (30 min avant le petit-déjeuner)',
+    defaultArabicInstructions: 'قرص واحد صباحاً على الريق قبل الفطور بنصف ساعة مع كأس ماء',
+    category: 'Endocrinologie', laboratory: 'Merck / Biopharm',
+    isReimbursable: true, isFavorite: false,
+    notes: 'Prendre à distance du calcium et du fer (2h). QSP 3 mois.',
+  },
+
+  // ═══════════════════════════════════════════════════════════════════
+  // 14. RHUMATOLOGIE & DOULEUR CHRONIQUE
+  // ═══════════════════════════════════════════════════════════════════
+  {
+    id: 'med-092', tradeName: 'COLCHICINE', dci: 'Colchicine',
+    form: 'Comprimé sécable', dosage: '1 mg', unitsPerBox: 20, unitLabel: 'comprimés',
+    defaultPosology: 'J1 : 3 cp répartis. J2 : 2 cp. J3 et suivants : 1 cp/jour',
+    defaultArabicInstructions: 'اليوم الأول: 3 أقراص موزعة. اليوم الثاني: قرصان. الأيام التالية: قرص واحد يومياً',
+    category: 'Rhumatologie', laboratory: 'Saidal',
+    isReimbursable: true, isFavorite: false,
+    notes: 'Traitement de la crise de goutte. Diarrhée = signe de surdosage.',
+  },
+  {
+    id: 'med-093', tradeName: 'ALLOPURINOL / ZYLORIC', dci: 'Allopurinol',
+    form: 'Comprimé', dosage: '100 mg', unitsPerBox: 28, unitLabel: 'comprimés',
+    defaultPosology: '1 à 3 cp/jour au cours des repas',
+    defaultArabicInstructions: 'قرص إلى 3 أقراص يومياً وسط الوجبات مع شرب كثير من الماء',
+    category: 'Rhumatologie', laboratory: 'Aspen / Saidal',
+    isReimbursable: true, isFavorite: false,
+    notes: 'Traitement de fond de la goutte. Bien s\'hydrater.',
+  },
+
+  // ═══════════════════════════════════════════════════════════════════
+  // 15. GYNÉCOLOGIE & OBSTÉTRIQUE
+  // ═══════════════════════════════════════════════════════════════════
+  {
+    id: 'med-095', tradeName: 'PROGESTÉRONE / UTROGESTAN', dci: 'Progestérone naturelle micronisée',
+    form: 'Capsule molle', dosage: '200 mg', unitsPerBox: 15, unitLabel: 'capsules',
+    defaultPosology: '1 capsule le soir au coucher par voie vaginale ou orale',
+    defaultArabicInstructions: 'كبسولة واحدة مساءً قبل النوم (عن طريق المهبل أو الفم حسب إرشادات الطبيب)',
+    category: 'Gynécologie', laboratory: 'Besins / Biopharm',
+    isReimbursable: true, isFavorite: false,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════
+  // 16. ANTIPARASITAIRES & ANTIFONGIQUES
+  // ═══════════════════════════════════════════════════════════════════
+  {
+    id: 'med-097', tradeName: 'FLUCONAZOLE / TRIFLUCAN', dci: 'Fluconazole',
+    form: 'Gélule', dosage: '150 mg', unitsPerBox: 1, unitLabel: 'gélule',
+    defaultPosology: '1 gélule en dose unique',
+    defaultArabicInstructions: 'كبسولة واحدة جرعة وحيدة',
+    category: 'Antiparasitaires & Antifongiques', laboratory: 'Pfizer / Saidal',
+    isReimbursable: true, isFavorite: false,
+  },
+  {
+    id: 'med-098', tradeName: 'ALBENDAZOLE / ZENTEL', dci: 'Albendazole',
+    form: 'Comprimé', dosage: '400 mg', unitsPerBox: 1, unitLabel: 'comprimé',
+    defaultPosology: '1 cp en dose unique au cours d\'un repas',
+    defaultArabicInstructions: 'قرص واحد جرعة وحيدة وسط الأكل',
+    category: 'Antiparasitaires & Antifongiques', laboratory: 'GSK / Saidal',
+    isReimbursable: true, isFavorite: false,
+    notes: 'Vermifuge. Dose unique à renouveler dans 15 jours si besoin.',
+  },
+
+  // ═══════════════════════════════════════════════════════════════════
+  // 17. UROLOGIE
+  // ═══════════════════════════════════════════════════════════════════
+  {
+    id: 'med-100', tradeName: 'TAMSULOSINE / OMIX', dci: 'Tamsulosine',
+    form: 'Gélule à libération prolongée', dosage: '0.4 mg', unitsPerBox: 30, unitLabel: 'gélules',
+    defaultPosology: '1 gélule/jour après le petit-déjeuner',
+    defaultArabicInstructions: 'كبسولة واحدة يومياً بعد وجبة الفطور',
+    category: 'Urologie', laboratory: 'Astellas / Biopharm',
+    isReimbursable: true, isFavorite: false,
+    notes: 'HBP. Avaler sans croquer.',
+  },
+
+  // ═══════════════════════════════════════════════════════════════════
+  // 18. SELS DE RÉHYDRATATION & PROBIOTIQUES
+  // ═══════════════════════════════════════════════════════════════════
+  {
+    id: 'med-102', tradeName: 'SRO (Sels de Réhydratation Orale)', dci: 'Glucose + Électrolytes',
+    form: 'Sachet (poudre)', dosage: '1 sachet pour 1L d\'eau', unitsPerBox: 20, unitLabel: 'sachets',
+    defaultPosology: '1 sachet dilué dans 1L d\'eau, à boire par petites gorgées',
+    defaultArabicInstructions: 'كيس واحد يُذاب في لتر ماء ويُشرب بالملاعق أو رشفات صغيرة على مدار اليوم',
+    category: 'Réhydratation & Probiotiques', laboratory: 'OMS / Saidal',
+    isReimbursable: true, isFavorite: true,
+    notes: 'Essentiel en cas de diarrhée, surtout chez le nourrisson et l\'enfant.',
+  },
+  {
+    id: 'med-103', tradeName: 'ULTRA-LEVURE', dci: 'Saccharomyces boulardii',
+    form: 'Gélule', dosage: '200 mg', unitsPerBox: 20, unitLabel: 'gélules',
+    defaultPosology: '1 gélule 2 fois/jour pendant toute la durée de l\'antibiothérapie',
+    defaultArabicInstructions: 'كبسولة واحدة مرتين يومياً طوال فترة العلاج بالمضادات الحيوية',
+    category: 'Réhydratation & Probiotiques', laboratory: 'Biocodex / Biopharm',
+    isReimbursable: true, isFavorite: true,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════
+  // 19. DISPOSITIFS MÉDICAUX & OUTILS DE DIAGNOSTIC CLINIQUE
+  // ═══════════════════════════════════════════════════════════════════
+  {
+    id: 'dev-001', tradeName: 'THERMOMÈTRE DIGITAL CLINIQUE',
+    dci: 'Dispositif médical de mesure thermique', form: 'Appareil électronique',
+    dosage: '±0.1°C', unitsPerBox: 1, unitLabel: 'appareil',
+    defaultPosology: 'Prendre la température axillaire ou rectale 2 fois/jour',
+    defaultArabicInstructions: 'محرار رقمي: قياس درجة الحرارة مرتين يومياً وتسجيلها',
+    category: 'Dispositifs & Diagnostic', laboratory: 'Officine / Matériel Médical',
+    isReimbursable: false, isDevice: true, isFavorite: true,
+    notes: 'Nettoyer l\'embout à l\'alcool après chaque utilisation.',
+  },
+  {
+    id: 'dev-002', tradeName: 'THERMOMÈTRE INFRAROUGE SANS CONTACT',
+    dci: 'Thermomètre frontal infrarouge', form: 'Appareil médical digital',
+    dosage: 'Frontal instantané', unitsPerBox: 1, unitLabel: 'appareil',
+    defaultPosology: '1 mesure à 3-5 cm du front',
+    defaultArabicInstructions: 'محرار بالأشعة تحت الحمراء: قياس فوري عن بعد على الجبين',
+    category: 'Dispositifs & Diagnostic', laboratory: 'Officine / Matériel Médical',
+    isReimbursable: false, isDevice: true, isFavorite: false,
+  },
+  {
+    id: 'dev-003', tradeName: 'TEST DE GROSSESSE URINAIRE RAPIDE',
+    dci: 'Test immunologique hCG', form: 'Stick test hygiénique',
+    dosage: 'Sensibilité 25 mUI/mL', unitsPerBox: 1, unitLabel: 'boîte',
+    defaultPosology: 'Sur les premières urines du matin au réveil',
+    defaultArabicInstructions: 'فحص الحمل المنزلي: يُجرى على البول الصباحي الأول وقراءة النتيجة بعد 5 دقائق',
+    category: 'Dispositifs & Diagnostic', laboratory: 'Officine / Diagnostic',
+    isReimbursable: false, isDevice: true, isFavorite: true,
+    notes: 'Lire entre 3 et 5 minutes. Ne pas interpréter après 10 min.',
+  },
+  {
+    id: 'dev-004', tradeName: 'LECTEUR DE GLYCÉMIE CAPILLAIRE (Kit)',
+    dci: 'Glucomètre + autopiqueur', form: 'Coffret complet',
+    dosage: 'Format de poche', unitsPerBox: 1, unitLabel: 'kit',
+    defaultPosology: 'Auto-surveillance glycémique : à jeun et 2h post-prandial',
+    defaultArabicInstructions: 'جهاز قياس السكر مع قلم الوخز لمتابعة السكري في المنزل',
+    category: 'Dispositifs & Diagnostic', laboratory: 'Officine / Matériel Médical',
+    isReimbursable: true, isDevice: true, isFavorite: true,
+  },
+  {
+    id: 'dev-005', tradeName: 'BANDELETTES RÉACTIVES GLYCÉMIE',
+    dci: 'Bandelettes de dosage glucose', form: 'Flacon bandelettes',
+    dosage: '50 bandelettes', unitsPerBox: 50, unitLabel: 'bandelettes',
+    defaultPosology: '1 bandelette par mesure',
+    defaultArabicInstructions: 'شرائط قياس السكر: تُستعمل مع جهاز قياس السكر الخاص بك',
+    category: 'Dispositifs & Diagnostic', laboratory: 'Officine / Matériel Médical',
+    isReimbursable: true, isDevice: true, isFavorite: true,
+    notes: 'Refermer le flacon immédiatement.',
+  },
+  {
+    id: 'dev-006', tradeName: 'LANCETTES STÉRILES AUTOPIQUEUR',
+    dci: 'Aiguilles stériles à usage unique', form: 'Boîte de 100',
+    dosage: '28G ou 30G', unitsPerBox: 100, unitLabel: 'lancettes',
+    defaultPosology: '1 lancette à usage unique par piqûre',
+    defaultArabicInstructions: 'إبر وخز معقمة ذات استعمال وحيد (علبة 100 إبرة)',
+    category: 'Dispositifs & Diagnostic', laboratory: 'Officine / Matériel Médical',
+    isReimbursable: true, isDevice: true, isFavorite: false,
+  },
+  {
+    id: 'dev-007', tradeName: 'TENSIOMÈTRE ÉLECTRONIQUE À BRASSARD',
+    dci: 'Moniteur de pression artérielle', form: 'Appareil + brassard adulte',
+    dosage: 'SYS / DIA / Pouls', unitsPerBox: 1, unitLabel: 'appareil',
+    defaultPosology: 'Règle des 3 : 3 mesures matin + 3 soir × 3 jours',
+    defaultArabicInstructions: 'جهاز قياس الضغط: قياس بعد 5 دقائق من الراحة التامة',
+    category: 'Dispositifs & Diagnostic', laboratory: 'Officine / Matériel Médical',
+    isReimbursable: false, isDevice: true, isFavorite: true,
+    notes: 'Position assise, 5 min de repos, sans parler.',
+  },
+  {
+    id: 'dev-008', tradeName: 'CHAMBRE D\'INHALATION PÉDIATRIQUE',
+    dci: 'Aérochambre / Spacer', form: 'Chambre + masque silicone',
+    dosage: 'Taille Enfant ou Adulte', unitsPerBox: 1, unitLabel: 'unité',
+    defaultPosology: '1 bouffée dans la chambre, respirer 5 à 10 fois',
+    defaultArabicInstructions: 'غرفة استنشاق مع قناع: تساعد على استنشاق دواء البخاخ بفعالية',
+    category: 'Dispositifs & Diagnostic', laboratory: 'Officine / Matériel Médical',
+    isReimbursable: true, isDevice: true, isFavorite: false,
+  },
+  {
+    id: 'dev-009', tradeName: 'OXYMÈTRE DE POULS (Saturomètre)',
+    dci: 'Capteur SpO2 digital', form: 'Pince digitale',
+    dosage: 'SpO2 + Pouls', unitsPerBox: 1, unitLabel: 'appareil',
+    defaultPosology: 'Placer au bout du doigt, lire SpO2 et fréquence cardiaque',
+    defaultArabicInstructions: 'جهاز قياس الأكسجين في الدم: يوضع على طرف الإصبع لقراءة نسبة الأكسجين والنبض',
+    category: 'Dispositifs & Diagnostic', laboratory: 'Officine / Matériel Médical',
+    isReimbursable: false, isDevice: true, isFavorite: false,
+  },
+];
   // --- Antalgiques & Antipyrétiques ---
   {
     id: 'med-1',
@@ -330,6 +1077,155 @@ export const DEFAULT_MEDICINES: Medicine[] = [
     isReimbursable: true,
     isFavorite: false,
     notes: 'Prise matinale impérative.',
+  },
+
+  // --- Psychiatrie & Neurologie ---
+  {
+    id: 'med-18',
+    tradeName: 'LEXOMIL / BROMAZÉPAM',
+    dci: 'Bromazépam',
+    form: 'Comprimé sécable',
+    dosage: '6 mg',
+    unitsPerBox: 30,
+    unitLabel: 'comprimés',
+    defaultPosology: '1/4 de comprimé le matin, 1/4 à midi et 1/2 le soir',
+    defaultArabicInstructions: 'ربع قرص صباحاً، ربع قرص ظهراً، ونصف قرص مساءً',
+    category: 'Psychiatrie & Neurologie',
+    laboratory: 'Roche / Saidal',
+    isReimbursable: true,
+    isFavorite: false,
+    notes: 'Prescription limitée à 12 semaines (Ordonnance à souche ou assimilée selon la loi algérienne).',
+  },
+  {
+    id: 'med-19',
+    tradeName: 'DÉPAKINE / ACIDE VALPROÏQUE',
+    dci: 'Acide Valproïque',
+    form: 'Comprimé chrono',
+    dosage: '500 mg',
+    unitsPerBox: 30,
+    unitLabel: 'comprimés',
+    defaultPosology: '1 comprimé matin et soir',
+    defaultArabicInstructions: 'قرص واحد صباحاً ومساءً بانتظام لمرض الصرع',
+    category: 'Psychiatrie & Neurologie',
+    laboratory: 'Sanofi',
+    isReimbursable: true,
+    isFavorite: false,
+    notes: 'Surveillance hépatique nécessaire.',
+  },
+
+  // --- Dermatologie ---
+  {
+    id: 'med-20',
+    tradeName: 'FUCIDINE',
+    dci: 'Acide fusidique',
+    form: 'Crème / Pommade',
+    dosage: '2%',
+    unitsPerBox: 1,
+    unitLabel: 'tube (15g)',
+    defaultPosology: 'Application locale 2 fois par jour sur la zone affectée',
+    defaultArabicInstructions: 'تطبيق مرتين يومياً على المنطقة المصابة بعد تنظيفها',
+    category: 'Dermatologie',
+    laboratory: 'Leo / Saidal',
+    isReimbursable: true,
+    isFavorite: false,
+  },
+  {
+    id: 'med-21',
+    tradeName: 'DIPROSONE / BÉTAMÉTHASONE',
+    dci: 'Bétaméthasone dipropionate',
+    form: 'Pommade',
+    dosage: '0.05%',
+    unitsPerBox: 1,
+    unitLabel: 'tube (30g)',
+    defaultPosology: '1 application par jour en couche mince',
+    defaultArabicInstructions: 'تطبيق طبقة رقيقة مرة واحدة يومياً',
+    category: 'Dermatologie',
+    laboratory: 'MSD / Biopharm',
+    isReimbursable: true,
+    isFavorite: false,
+    notes: 'Ne pas appliquer sur le visage sauf avis contraire.',
+  },
+
+  // --- Gastro-entérologie complémentaires ---
+  {
+    id: 'med-22',
+    tradeName: 'SMECTA / DIOSMECTITE',
+    dci: 'Diosmectite',
+    form: 'Poudre pour suspension buvable (sachets)',
+    dosage: '3 g',
+    unitsPerBox: 30,
+    unitLabel: 'sachets',
+    defaultPosology: '1 sachet 3 fois par jour',
+    defaultArabicInstructions: 'كيس واحد يذاب في الماء 3 مرات يومياً لحالات الإسهال',
+    category: 'Gastro-entérologie',
+    laboratory: 'Ipsen',
+    isReimbursable: true,
+    isFavorite: true,
+  },
+  {
+    id: 'med-23',
+    tradeName: 'SPASFON / PHLOROGLUCINOL',
+    dci: 'Phloroglucinol',
+    form: 'Comprimé enrobé',
+    dosage: '80 mg',
+    unitsPerBox: 30,
+    unitLabel: 'comprimés',
+    defaultPosology: '2 comprimés au moment de la crise, à renouveler si besoin (max 6/j)',
+    defaultArabicInstructions: 'قرصان عند الشعور بالمغص، يمكن إعادتها عند الضرورة (كحد أقصى 6 أقراص يومياً)',
+    category: 'Gastro-entérologie',
+    laboratory: 'Teva / Inpha',
+    isReimbursable: true,
+    isFavorite: true,
+  },
+
+  // --- Diabétologie (complémentaires) ---
+  {
+    id: 'med-24',
+    tradeName: 'AMAREL / GLIMÉPIRIDE',
+    dci: 'Glimépiride',
+    form: 'Comprimé',
+    dosage: '2 mg',
+    unitsPerBox: 30,
+    unitLabel: 'comprimés',
+    defaultPosology: '1 comprimé par jour, de préférence avant le petit déjeuner',
+    defaultArabicInstructions: 'قرص واحد يومياً قبل فطور الصباح',
+    category: 'Diabète & Métabolisme',
+    laboratory: 'Sanofi / Saidal',
+    isReimbursable: true,
+    isFavorite: false,
+    notes: 'Risque d\'hypoglycémie. Manger juste après.',
+  },
+
+  // --- Antibiotiques complémentaires ---
+  {
+    id: 'med-25',
+    tradeName: 'ZINNAT / CÉFUROXIME',
+    dci: 'Céfuroxime axétil',
+    form: 'Comprimé',
+    dosage: '500 mg',
+    unitsPerBox: 10,
+    unitLabel: 'comprimés',
+    defaultPosology: '1 comprimé matin et soir au milieu des repas pendant 5 à 7 jours',
+    defaultArabicInstructions: 'قرص واحد صباحاً ومساءً وسط الأكل لمدة 5 إلى 7 أيام',
+    category: 'Antibiotiques',
+    laboratory: 'GSK',
+    isReimbursable: true,
+    isFavorite: false,
+  },
+  {
+    id: 'med-26',
+    tradeName: 'ZECLAR / CLARITHROMYCINE',
+    dci: 'Clarithromycine',
+    form: 'Comprimé pelliculé',
+    dosage: '500 mg',
+    unitsPerBox: 14,
+    unitLabel: 'comprimés',
+    defaultPosology: '1 comprimé matin et soir',
+    defaultArabicInstructions: 'قرص واحد صباحاً ومساءً',
+    category: 'Antibiotiques',
+    laboratory: 'Abbott / Biopharm',
+    isReimbursable: true,
+    isFavorite: false,
   },
 
   // --- DISPOSITIFS MÉDICAUX & OUTILS DE DIAGNOSTIC CLINIQUE ---

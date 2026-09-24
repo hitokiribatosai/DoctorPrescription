@@ -3,7 +3,7 @@ import { DEFAULT_MEDICINES, DEFAULT_DOCTOR_PROFILE, INITIAL_PATIENTS } from '../
 import { formatPrescriptionDate } from './boxCalculator';
 
 const STORAGE_KEYS = {
-  MEDICINES: 'ordomed_dz_medicines_v2',
+  MEDICINES: 'ordomed_dz_medicines_v4',
   PATIENTS: 'ordomed_dz_patients_v2',
   PRESCRIPTIONS: 'ordomed_dz_prescriptions_history_v2',
   DOCTOR_PROFILE: 'ordomed_dz_doctor_profile_v2',
