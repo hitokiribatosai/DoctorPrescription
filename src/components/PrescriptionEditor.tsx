@@ -11,7 +11,6 @@ import { ARABIC_INSTRUCTION_PRESETS } from '../data/defaultData';
 import { calculateBoxes, formatPrescriptionDate } from '../services/boxCalculator';
 import { storageService } from '../services/storageService';
 import { 
-  Plus, 
   Trash2, 
   Printer, 
   Save, 
@@ -24,17 +23,12 @@ import {
   Repeat,
   ZoomIn,
   ZoomOut,
-  Maximize2,
   ChevronLeft,
   ChevronRight,
   Columns,
   History,
   FileText,
   User,
-  Sliders,
-  Sparkles,
-  Phone,
-  CreditCard
 } from 'lucide-react';
 import { PrintablePrescription } from './PrintablePrescription';
 
@@ -53,6 +47,8 @@ interface PrescriptionEditorProps {
 }
 
 type ViewMode = 'editor' | 'preview' | 'split' | 'patient_history';
+
+const createItemId = () => `item-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
 
 export const PrescriptionEditor: React.FC<PrescriptionEditorProps> = ({
   medicines,
@@ -111,7 +107,6 @@ export const PrescriptionEditor: React.FC<PrescriptionEditorProps> = ({
 
   // Search & Filter State
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
   // Historique des ordonnances du patient actuellement sélectionné
@@ -142,7 +137,7 @@ export const PrescriptionEditor: React.FC<PrescriptionEditorProps> = ({
     setItems(
       presc.items.map(item => ({
         ...item,
-        id: 'item-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4),
+        id: createItemId(),
       }))
     );
     setPrescriptionType(presc.type);
@@ -162,14 +157,6 @@ export const PrescriptionEditor: React.FC<PrescriptionEditorProps> = ({
   }, [medicines]);
 
   // Catégories
-  const categories = useMemo(() => {
-    const set = new Set<string>();
-    medicines.forEach(m => {
-      if (m.category) set.add(m.category);
-    });
-    return Array.from(set);
-  }, [medicines]);
-
   // Médicaments filtrés
   const filteredMedicines = useMemo(() => {
     return medicines.filter(m => {
@@ -177,11 +164,9 @@ export const PrescriptionEditor: React.FC<PrescriptionEditorProps> = ({
         m.tradeName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         m.dci.toLowerCase().includes(searchQuery.toLowerCase()) ||
         m.laboratory.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchCategory =
-        selectedCategory === 'all' || m.category === selectedCategory;
-      return matchSearch && matchCategory;
+      return matchSearch;
     });
-  }, [medicines, searchQuery, selectedCategory]);
+  }, [medicines, searchQuery]);
 
   // Ajouter un médicament à l'ordonnance
   const handleAddMedicine = (med: Medicine) => {
@@ -192,7 +177,7 @@ export const PrescriptionEditor: React.FC<PrescriptionEditorProps> = ({
     const calc = calculateBoxes(med, defaultDailyDose, defaultDuration);
 
     const newItem: PrescriptionItem = {
-      id: 'item-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4),
+      id: createItemId(),
       medicineId: med.id,
       tradeName: med.tradeName,
       dci: med.dci,
@@ -533,12 +518,20 @@ export const PrescriptionEditor: React.FC<PrescriptionEditorProps> = ({
                 </div>
               </div>
 
-              <button
-                onClick={() => setViewMode('split')}
-                className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200"
-              >
-                ← Revenir à l'Ordonnance
-              </button>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => onSwitchToHistory(selectedPatientId)}
+                  className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-blue-800 bg-blue-50 hover:bg-blue-100"
+                >
+                  Historique complet
+                </button>
+                <button
+                  onClick={() => setViewMode('split')}
+                  className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200"
+                >
+                  ← Revenir à l'Ordonnance
+                </button>
+              </div>
             </div>
 
             <div className="space-y-3">
@@ -888,7 +881,6 @@ export const PrescriptionEditor: React.FC<PrescriptionEditorProps> = ({
                             onChange={e => handleUpdateItem(item.id, { arabicInstructions: e.target.value })}
                             className="w-full font-arabic text-xs p-1 bg-emerald-50/40 border border-emerald-200 rounded-md font-semibold text-slate-800"
                           />
-                        </div>
                         </div>
                       </div>
                     ))}

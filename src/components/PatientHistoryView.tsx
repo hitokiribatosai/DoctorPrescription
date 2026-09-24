@@ -4,17 +4,14 @@ import { storageService } from '../services/storageService';
 import { 
   Users, 
   Search, 
-  Calendar, 
   FileText, 
   Repeat, 
   Printer, 
   Download, 
   Trash2, 
-  AlertCircle, 
   Phone, 
   CreditCard, 
   Clock, 
-  ChevronRight,
   UserCheck,
   ShieldAlert
 } from 'lucide-react';

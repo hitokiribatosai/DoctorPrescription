@@ -4,15 +4,10 @@ import { storageService } from '../services/storageService';
 import { 
   Settings, 
   Save, 
-  Upload, 
   CheckCircle, 
   MapPin, 
-  Phone, 
-  Clock, 
   Award, 
-  FileText,
   Printer,
-  Sparkles
 } from 'lucide-react';
 
 interface SettingsManagerProps {

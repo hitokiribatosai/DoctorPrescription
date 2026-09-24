@@ -11,9 +11,6 @@ import {
   Download, 
   Upload, 
   Activity, 
-  Check, 
-  Stethoscope,
-  Sparkles
 } from 'lucide-react';
 import { ARABIC_INSTRUCTION_PRESETS } from '../data/defaultData';
 

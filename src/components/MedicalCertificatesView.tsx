@@ -3,13 +3,9 @@ import { DoctorProfile, Patient } from '../types';
 import { formatPrescriptionDate } from '../services/boxCalculator';
 import { 
   Award, 
-  FileCheck, 
   Printer, 
-  Calendar, 
-  Activity, 
   CheckSquare, 
   Square,
-  Sparkles
 } from 'lucide-react';
 
 interface MedicalCertificatesViewProps {

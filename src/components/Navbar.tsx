@@ -6,7 +6,6 @@ import {
   Award, 
   Settings, 
   Download, 
-  Printer, 
   Stethoscope,
   Star
 } from 'lucide-react';

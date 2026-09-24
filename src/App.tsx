@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Medicine, Patient, Prescription, DoctorProfile, PrescriptionType, PrescriptionItem } from './types';
 import { storageService } from './services/storageService';
 import { Navbar } from './components/Navbar';
